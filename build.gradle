@@ -62,7 +62,7 @@ dependencies {
         transitive = false
     }
     implementation "net.industrial-craft:industrialcraft-2:2.2.828-experimental:dev"
-    implementation 'com.opencsv:opencsv:4.0'
+    implementation 'com.opencsv:opencsv:4.0' //5.5.2 is a breaking update
 }
 
 processResources
