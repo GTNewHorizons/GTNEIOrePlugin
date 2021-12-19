@@ -48,9 +48,9 @@ public class GT5CFGHelper {
                 rawboolsset.add(st);
             }
             rawbools = new ArrayList<String>(rawboolsset);
-            for (int i = 0; i < rawbools.size(); i++) {
-                st = rawbools.get(i);
-                for (int j = 0; j < DimensionHelper.DimName.length; j++) {
+            for (int j = 0; j < DimensionHelper.DimName.length; j++) {
+                for (int i = 0; i < rawbools.size(); i++) {
+                    st = rawbools.get(i);
                     if (st.contains(DimensionHelper.DimName[j]))
                         if (st.contains("=true"))
                             ret = (ret + DimensionHelper.DimNameDisplayed[j] + ",");
@@ -161,10 +161,10 @@ public class GT5CFGHelper {
                     }
                     rawbools = new ArrayList<String>(rawboolsset);
                     //filter for dims set to true
-                    for (int i = 0; i < rawbools.size(); i++) {
-                        st = rawbools.get(i);
+                    for (int j = 0; j < DimensionHelper.DimName.length; j++) {
                         //FMLLog.info("RawBools:"+st);
-                        for (int j = 0; j < DimensionHelper.DimName.length; j++) {
+                        for (int i = 0; i < rawbools.size(); i++) {
+                            st = rawbools.get(i);
                             if (st.contains(DimensionHelper.DimName[j]))
                                 if (st.contains("=true"))
                                     ret = (ret + DimensionHelper.DimNameDisplayed[j] + ",");
