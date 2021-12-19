@@ -178,7 +178,7 @@ public class PluginGT5VeinStat extends PluginGT5Base {
         }
         else*/
         if(Loader.isModLoaded("visualprospecting")) {
-            GuiDraw.drawString(I18n.format("gtnop.gui.nei.veinName") + ": " + I18n.format(oreLayer.veinName) + "" + I18n.format("gtnop.gui.nei.vein"), 2, 20, 0x404040, false);
+            GuiDraw.drawString(I18n.format("gtnop.gui.nei.veinName") + ": " + I18n.format(oreLayer.veinName) + " " + I18n.format("gtnop.gui.nei.vein"), 2, 20, 0x404040, false);
         }
         else {
             if (getGTOreLocalizedName(oreLayer.Meta[0]).contains("Ore"))
