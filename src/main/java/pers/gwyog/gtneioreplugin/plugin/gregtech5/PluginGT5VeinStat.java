@@ -16,6 +16,7 @@ import java.util.Set;
 
 public class PluginGT5VeinStat extends PluginGT5Base {
 
+    // Unused
     public static String[] getLocalizedVeinName(OreLayerWrapper oreLayer) {
         String unlocalizedName = oreLayer.veinName;
         if (unlocalizedName.startsWith("ore.mix.custom."))
@@ -24,6 +25,7 @@ public class PluginGT5VeinStat extends PluginGT5Base {
             return new String[]{I18n.format("gtnop." + unlocalizedName) + I18n.format("gtnop.ore.vein.name")};
     }
 
+    // Unused
     public static String coustomVeinRenamer(OreLayerWrapper oreLayer) {
         Set<String> s = new HashSet<String>();
         for (int i = 0; i < 4; i++)
@@ -57,6 +59,7 @@ public class PluginGT5VeinStat extends PluginGT5Base {
         return weightedChance;
     }*/
 
+    // Unused
     public static String[] get_Cnames(OreLayerWrapper oreLayer) {
 
         String[] splt = coustomVeinRenamer(oreLayer).split("\\s");
@@ -165,16 +168,7 @@ public class PluginGT5VeinStat extends PluginGT5Base {
         OreLayerWrapper oreLayer = GT5OreLayerHelper.mapOreLayerWrapper.get(crecipe.veinName);
 
         String sDimNames = GT5OreLayerHelper.bufferedDims.get(oreLayer);
-        /*if (getLocalizedVeinName(oreLayer).length>1) {
-        GuiDraw.drawString(I18n.format("gtnop.gui.nei.veinName") + ": " + getLocalizedVeinName(oreLayer)[0], 2, 20, 0x404040, false);
-        if (getLocalizedVeinName(oreLayer).length>2) {
-        	GuiDraw.drawString(I18n.format(getLocalizedVeinName(oreLayer)[1]), 2, 30, 0x404040, false);
-        	GuiDraw.drawString(I18n.format(getLocalizedVeinName(oreLayer)[2]), 2, 40, 0x404040, false);
-        }
-        else
-        GuiDraw.drawString(I18n.format(getLocalizedVeinName(oreLayer)[1]), 2, 30, 0x404040, false);
-        }
-        else*/
+
         if(Loader.isModLoaded("visualprospecting")) {
             GuiDraw.drawString(I18n.format("gtnop.gui.nei.veinName") + ": " + I18n.format(oreLayer.veinName) + " " + I18n.format("gtnop.gui.nei.vein"), 2, 20, 0x404040, false);
         }

@@ -32,16 +32,6 @@ public abstract class PluginBase extends TemplateRecipeHandler {
 
     public abstract String getOutputId();
 
-    public String getWorldNameTranslated(boolean genOverworld) {
-        String worldNameTranslated = "";
-        if (genOverworld) {
-            if (!worldNameTranslated.isEmpty())
-                worldNameTranslated += ", ";
-            worldNameTranslated += I18n.format("gtnop.world.overworld.name");
-        }
-        return worldNameTranslated;
-    }
-
     public int getGuiWidth() {
         return 166;
     }
