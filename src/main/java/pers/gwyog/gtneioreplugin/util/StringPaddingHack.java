@@ -10,19 +10,26 @@ public class StringPaddingHack {
     private static final int SPACE_WIDTH = 4;
     private static final int BOLD_SPACE_WIDTH = 5;
 
-    // 4 strings, 2 columns
-    // Résultat désiré:
-    // #  #
-    // #  #
+    /**
+     * Given a list of strings, arrange them into the requested number of columns with the specified spacing.
+     * Up to 3 additional spaces might be added between columns because this function relies on quirky font behaviors.
+     * 
+     * @param strings List of strings to wrap into columns
+     * @param numColumns Number of columns, minimum of 1
+     * @param minColumnSpacing Minimum amount of extra spaces between columns.
+     * @return
+     */
     public static String[] stringsToSpacedColumns(String[] strings, int numColumns, int minColumnSpacing) {
         if (numColumns < 1) {
             throw new IllegalArgumentException(String.format("Argument numColumns must be 1 or higher, got value %d", numColumns));
         }
         if (numColumns > 1) {
-            int sliceSize = strings.length / numColumns; //sliceSize = 2
-            int remainder = strings.length % numColumns; //remainder = 0
+            int sliceSize = strings.length / numColumns;
+            int remainder = strings.length % numColumns;
             String[][] columns = new String[numColumns][];
             int totalExtra = 0;
+
+            // Arrange all strings into their proper columns so that the list of strings wraps through all columns
             for (int i = 0; i < numColumns; i++) {
                 int extra = 0;
                 if (remainder > 0) {
@@ -30,22 +37,17 @@ public class StringPaddingHack {
                     extra = 1;
                 }
                 columns[i] = Arrays.copyOfRange(strings, (sliceSize * i) + totalExtra, (sliceSize * (i + 1) + totalExtra + extra));
-                // remainder = 0 totalExtra = 0 extra = 0
-                // i = 0                                          2 * 0  + 0         ,          2 * 1       + 0          + 0      
-                // i = 0                                          0                  ,          2                                    strings[0 to 1] (2 total)
-                // remainder = 0 totalExtra = 0 extra = 0
-                // i = 1                                          2 * 1  + 0         ,          2 * 2       + 0          + 0
-                // i = 1                                          2                  ,          4                                    strings[2 to 3] (2 total)
 
                 totalExtra += extra;
             }
 
+            // Add extra padding to all but the last columns to align the text
             for(int i = 0; i < numColumns - 1; i++) {
                 columns[i] = padStrings(columns[i], minColumnSpacing);
             }
     
-            strings = columns[0];
-            
+            // Concatenate all columns into the final result
+            strings = columns[0];            
             for (int i = 0; i < sliceSize; i++ ) {                
                 for (int j = 1; j < numColumns; j++ ) {
                     strings[i] += columns[j][i];
