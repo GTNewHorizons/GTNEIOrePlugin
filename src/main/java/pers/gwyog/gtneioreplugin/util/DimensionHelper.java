@@ -99,7 +99,7 @@ public class DimensionHelper {
                     "BC", // GalaxySpace_BarnardC
                     "BE", // GalaxySpace_BarnardE
                     "BF", // GalaxySpace_BarnardF
-                    "CA", // GalaxySpace_CentauriA
+                    "CB", // GalaxySpace_CentauriA is actually αCentauri Bb
                     "TE", // GalaxySpace_TcetiE
                     "DD", // Underdark
                     "VB", // GalaxySpace_VegaB
