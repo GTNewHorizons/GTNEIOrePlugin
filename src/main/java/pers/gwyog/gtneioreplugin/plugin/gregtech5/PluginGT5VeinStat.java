@@ -17,14 +17,14 @@ public class PluginGT5VeinStat extends PluginGT5Base {
     @Override
     public void loadCraftingRecipes(String outputId, Object... results) {
         if (outputId.equals(getOutputId())) {
-            OreLayerWrapper oreLayerWrapper;
             for (String veinName : GT5OreLayerHelper.mapOreLayerWrapper.keySet()) {
-                oreLayerWrapper = GT5OreLayerHelper.mapOreLayerWrapper.get(veinName);
-                List<ItemStack> stackListPrimary = new ArrayList<ItemStack>();
-                List<ItemStack> stackListSecondary = new ArrayList<ItemStack>();
-                List<ItemStack> stackListBetween = new ArrayList<ItemStack>();
-                List<ItemStack> stackListSporadic = new ArrayList<ItemStack>();
-                for (int i = 0; i < 7; i++) {
+                OreLayerWrapper oreLayerWrapper = GT5OreLayerHelper.mapOreLayerWrapper.get(veinName);
+                int maximumMaterialIndex = 7;
+                List<ItemStack> stackListPrimary = new ArrayList<>();
+                List<ItemStack> stackListSecondary = new ArrayList<>();
+                List<ItemStack> stackListBetween = new ArrayList<>();
+                List<ItemStack> stackListSporadic = new ArrayList<>();
+                for (int i = 0; i < maximumMaterialIndex; i++) {
                     stackListPrimary.add(new ItemStack(GregTech_API.sBlockOres1, 1, oreLayerWrapper.Meta[0] + i * 1000));
                     stackListSecondary.add(new ItemStack(GregTech_API.sBlockOres1, 1, oreLayerWrapper.Meta[1] + i * 1000));
                     stackListBetween.add(new ItemStack(GregTech_API.sBlockOres1, 1, oreLayerWrapper.Meta[2] + i * 1000));
@@ -46,11 +46,13 @@ public class PluginGT5VeinStat extends PluginGT5Base {
             short baseMeta = (short) (stack.getItemDamage() % 1000);
             for (OreLayerWrapper worldGen : GT5OreLayerHelper.mapOreLayerWrapper.values()) {
                 if (worldGen.Meta[0] == baseMeta || worldGen.Meta[1] == baseMeta || worldGen.Meta[2] == baseMeta || worldGen.Meta[3] == baseMeta) {
-                    List<ItemStack> stackListPrimary = new ArrayList<ItemStack>();
-                    List<ItemStack> stackListSecondary = new ArrayList<ItemStack>();
-                    List<ItemStack> stackListBetween = new ArrayList<ItemStack>();
-                    List<ItemStack> stackListSporadic = new ArrayList<ItemStack>();
-                    for (int i = 0; i < getMaximumMaterialIndex(baseMeta, false); i++) {
+                    int maximumMaterialIndex =
+                        getMaximumMaterialIndex(baseMeta, false);
+                    List<ItemStack> stackListPrimary = new ArrayList<>();
+                    List<ItemStack> stackListSecondary = new ArrayList<>();
+                    List<ItemStack> stackListBetween = new ArrayList<>();
+                    List<ItemStack> stackListSporadic = new ArrayList<>();
+                    for (int i = 0; i < maximumMaterialIndex; i++) {
                         stackListPrimary.add(new ItemStack(GregTech_API.sBlockOres1, 1, worldGen.Meta[0] + i * 1000));
                         stackListSecondary.add(new ItemStack(GregTech_API.sBlockOres1, 1, worldGen.Meta[1] + i * 1000));
                         stackListBetween.add(new ItemStack(GregTech_API.sBlockOres1, 1, worldGen.Meta[2] + i * 1000));
@@ -108,15 +110,15 @@ public class PluginGT5VeinStat extends PluginGT5Base {
     public String getRecipeName() {
         return I18n.format("gtnop.gui.veinStat.name");
     }
-    
+
     /**
      * The dimension names for a given recipe identifier
-     * 
+     *
      * @param recipe identifier
      * @return A CSV string of dimension name abbreviations
      */
     @Override
-    protected String getDimensionNames(int recipe) {        
+    protected String getDimensionNames(int recipe) {
         CachedVeinStatRecipe crecipe = (CachedVeinStatRecipe) this.arecipes.get(recipe);
         OreLayerWrapper oreLayer = GT5OreLayerHelper.mapOreLayerWrapper.get(crecipe.veinName);
         return GT5OreLayerHelper.bufferedDims.get(oreLayer);
@@ -140,15 +142,11 @@ public class PluginGT5VeinStat extends PluginGT5Base {
 
         @Override
         public List<PositionedStack> getIngredients() {
-            List<PositionedStack> ingredientsList = new ArrayList<PositionedStack>();
+            List<PositionedStack> ingredientsList = new ArrayList<>();
             positionedStackPrimary.setPermutationToRender((cycleticks / 20) % positionedStackPrimary.items.length);
-            ;
             positionedStackSecondary.setPermutationToRender((cycleticks / 20) % positionedStackPrimary.items.length);
-            ;
             positionedStackBetween.setPermutationToRender((cycleticks / 20) % positionedStackPrimary.items.length);
-            ;
             positionedStackSporadic.setPermutationToRender((cycleticks / 20) % positionedStackPrimary.items.length);
-            ;
             ingredientsList.add(positionedStackPrimary);
             ingredientsList.add(positionedStackSecondary);
             ingredientsList.add(positionedStackBetween);

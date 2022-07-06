@@ -54,25 +54,25 @@ public class PluginGT5SmallOreStat extends PluginGT5Base {
             short baseMeta = (short) (stack.getItemDamage() % 1000);
             for (OreSmallWrapper oreSmallWorldGen : GT5OreSmallHelper.mapOreSmallWrapper.values()) {
                 if (oreSmallWorldGen.oreMeta == baseMeta) {
-                    List<ItemStack> stackList = new ArrayList<ItemStack>();
+                    List<ItemStack> stackList = new ArrayList<>();
                     int maximumIndex = getMaximumMaterialIndex(baseMeta, true);
                     for (int i = 0; i < maximumIndex; i++)
                         stackList.add(new ItemStack(GregTech_API.sBlockOres1, 1, oreSmallWorldGen.oreMeta + 16000 + i * 1000));
-                    List<ItemStack> materialDustStackList = new ArrayList<ItemStack>();
+                    List<ItemStack> materialDustStackList = new ArrayList<>();
                     for (int i = 0; i < maximumIndex; i++)
                         materialDustStackList.add(GT_OreDictUnificator.get(OrePrefixes.dust, GT5OreSmallHelper.getDroppedDusts()[i], 1L));
                     this.arecipes.add(new CachedOreSmallRecipe(oreSmallWorldGen.oreGenName, stackList, materialDustStackList, GT5OreSmallHelper.mapOreMetaToOreDrops.get(baseMeta)));
                 }
             }
-        } else if (GT5OreSmallHelper.mapOreDropUnlocalizedNameToOreMeta.keySet().contains(stack.getUnlocalizedName())) {
+        } else if (GT5OreSmallHelper.mapOreDropUnlocalizedNameToOreMeta.containsKey(stack.getUnlocalizedName())) {
             short baseMeta = GT5OreSmallHelper.mapOreDropUnlocalizedNameToOreMeta.get(stack.getUnlocalizedName());
             for (String oreGenName : GT5OreSmallHelper.mapOreSmallWrapper.keySet()) {
                 OreSmallWrapper oreSmallWrapper = GT5OreSmallHelper.mapOreSmallWrapper.get(oreGenName);
                 if (oreSmallWrapper.oreMeta == baseMeta) {
-                    List<ItemStack> stackList = new ArrayList<ItemStack>();
+                    List<ItemStack> stackList = new ArrayList<>();
                     for (int i = 0; i < 7; i++)
                         stackList.add(new ItemStack(GregTech_API.sBlockOres1, 1, baseMeta + 16000 + i * 1000));
-                    List<ItemStack> materialDustStackList = new ArrayList<ItemStack>();
+                    List<ItemStack> materialDustStackList = new ArrayList<>();
                     for (int i = 0; i < 7; i++)
                         materialDustStackList.add(GT_OreDictUnificator.get(OrePrefixes.dust, GT5OreSmallHelper.getDroppedDusts()[i], 1L));
                     this.arecipes.add(new CachedOreSmallRecipe(GT5OreSmallHelper.mapOreSmallWrapper.get(oreGenName).oreGenName, stackList, materialDustStackList, GT5OreSmallHelper.mapOreMetaToOreDrops.get(baseMeta)));
@@ -94,17 +94,17 @@ public class PluginGT5SmallOreStat extends PluginGT5Base {
 
     /**
      * The dimension names for a given recipe identifier
-     * 
+     *
      * @param recipe identifier
      * @return A CSV string of dimension name abbreviations
      */
     @Override
-    protected String getDimensionNames(int recipe) {        
+    protected String getDimensionNames(int recipe) {
         CachedOreSmallRecipe crecipe = (CachedOreSmallRecipe) this.arecipes.get(recipe);
         OreSmallWrapper oreSmall = GT5OreSmallHelper.mapOreSmallWrapper.get(crecipe.oreGenName);
         return GT5OreSmallHelper.bufferedDims.get(oreSmall);
     }
-    
+
     public class CachedOreSmallRecipe extends CachedRecipe {
         public String oreGenName;
         public PositionedStack positionedStackOreSmall;
@@ -115,7 +115,7 @@ public class PluginGT5SmallOreStat extends PluginGT5Base {
             this.oreGenName = oreGenName;
             this.positionedStackOreSmall = new PositionedStack(stackList, 2, 0);
             this.positionedStackMaterialDust = new PositionedStack(materialDustStackList, 43, 79 + getRestrictBiomeOffset());
-            List<PositionedStack> positionedDropStackList = new ArrayList<PositionedStack>();
+            List<PositionedStack> positionedDropStackList = new ArrayList<>();
             int i = 1;
             for (ItemStack stackDrop : dropStackList)
                 positionedDropStackList.add(new PositionedStack(stackDrop, 43 + 20 * (i % 4), 79 + 16 * ((i++) / 4) + getRestrictBiomeOffset()));
