@@ -1,18 +1,17 @@
 package pers.gwyog.gtneioreplugin.plugin.gregtech5;
 
+import static pers.gwyog.gtneioreplugin.util.OreVeinLayer.*;
+
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import cpw.mods.fml.common.Loader;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import pers.gwyog.gtneioreplugin.util.GT5OreLayerHelper;
 import pers.gwyog.gtneioreplugin.util.GT5OreLayerHelper.OreLayerWrapper;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import static pers.gwyog.gtneioreplugin.util.OreVeinLayer.*;
 
 public class PluginGT5VeinStat extends PluginGT5Base {
 
@@ -39,19 +38,18 @@ public class PluginGT5VeinStat extends PluginGT5Base {
     private void loadMatchingVeins(short oreId) {
         for (OreLayerWrapper oreVein : getAllVeins()) {
             if (oreVein.containsOre(oreId)) {
-                addVeinWithLayers(oreVein, getMaximumMaterialIndex(oreId,
-                    false));
+                addVeinWithLayers(oreVein, getMaximumMaterialIndex(oreId, false));
             }
         }
     }
 
-    private void addVeinWithLayers(OreLayerWrapper oreVein,
-                                   int maximumMaterialIndex) {
-        this.arecipes.add(new CachedVeinStatRecipe(oreVein.veinName,
-            oreVein.getVeinLayerOre(maximumMaterialIndex, VEIN_PRIMARY),
-            oreVein.getVeinLayerOre(maximumMaterialIndex, VEIN_SECONDARY),
-            oreVein.getVeinLayerOre(maximumMaterialIndex, VEIN_BETWEEN),
-            oreVein.getVeinLayerOre(maximumMaterialIndex, VEIN_SPORADIC)));
+    private void addVeinWithLayers(OreLayerWrapper oreVein, int maximumMaterialIndex) {
+        this.arecipes.add(new CachedVeinStatRecipe(
+                oreVein.veinName,
+                oreVein.getVeinLayerOre(maximumMaterialIndex, VEIN_PRIMARY),
+                oreVein.getVeinLayerOre(maximumMaterialIndex, VEIN_SECONDARY),
+                oreVein.getVeinLayerOre(maximumMaterialIndex, VEIN_BETWEEN),
+                oreVein.getVeinLayerOre(maximumMaterialIndex, VEIN_SPORADIC)));
     }
 
     private Collection<OreLayerWrapper> getAllVeins() {
@@ -73,8 +71,7 @@ public class PluginGT5VeinStat extends PluginGT5Base {
     }
 
     private OreLayerWrapper getOreLayer(int recipe) {
-        CachedVeinStatRecipe crecipe =
-            (CachedVeinStatRecipe) this.arecipes.get(recipe);
+        CachedVeinStatRecipe crecipe = (CachedVeinStatRecipe) this.arecipes.get(recipe);
         return GT5OreLayerHelper.mapOreLayerWrapper.get(crecipe.veinName);
     }
 
@@ -82,19 +79,15 @@ public class PluginGT5VeinStat extends PluginGT5Base {
         if (Loader.isModLoaded("visualprospecting")) {
             drawVeinNameLine(I18n.format(oreLayer.veinName) + " ");
         } else {
-            String veinName =
-                getGTOreLocalizedName(oreLayer.Meta[VEIN_PRIMARY]);
-            if (veinName.contains("Ore"))
-                drawVeinNameLine(veinName.split("Ore")[0]);
-            else if (veinName.contains("Sand"))
-                drawVeinNameLine(veinName.split("Sand")[0]);
+            String veinName = getGTOreLocalizedName(oreLayer.Meta[VEIN_PRIMARY]);
+            if (veinName.contains("Ore")) drawVeinNameLine(veinName.split("Ore")[0]);
+            else if (veinName.contains("Sand")) drawVeinNameLine(veinName.split("Sand")[0]);
             else drawVeinNameLine(veinName + " ");
         }
     }
 
     private void drawVeinNameLine(String veinName) {
-        drawLine("gtnop.gui.nei.veinName",
-            veinName + I18n.format("gtnop.gui" + ".nei.vein"), 2, 20);
+        drawLine("gtnop.gui.nei.veinName", veinName + I18n.format("gtnop.gui" + ".nei.vein"), 2, 20);
     }
 
     private void drawVeinLayerNames(OreLayerWrapper oreLayer) {
@@ -104,22 +97,17 @@ public class PluginGT5VeinStat extends PluginGT5Base {
         drawVeinLayerNameLine(oreLayer, VEIN_SPORADIC, 80);
     }
 
-    private void drawVeinLayerNameLine(OreLayerWrapper oreLayer,
-                                       int veinLayer, int height) {
-        drawLine(getOreVeinLayerName(veinLayer),
-            getGTOreLocalizedName(oreLayer.Meta[veinLayer]), 2, height);
+    private void drawVeinLayerNameLine(OreLayerWrapper oreLayer, int veinLayer, int height) {
+        drawLine(getOreVeinLayerName(veinLayer), getGTOreLocalizedName(oreLayer.Meta[veinLayer]), 2, height);
     }
 
     private void drawVeinInfo(OreLayerWrapper oreLayer) {
-        drawLine("gtnop.gui.nei.genHeight", oreLayer.worldGenHeightRange, 2,
-            90);
-        drawLine("gtnop.gui.nei.weightedChance",
-            Integer.toString(oreLayer.randomWeight), 100, 90);
+        drawLine("gtnop.gui.nei.genHeight", oreLayer.worldGenHeightRange, 2, 90);
+        drawLine("gtnop.gui.nei.weightedChance", Integer.toString(oreLayer.randomWeight), 100, 90);
     }
 
     private void drawLine(String lineKey, String value, int x, int y) {
-        GuiDraw.drawString(I18n.format(lineKey) + ": " + value, x, y,
-            0x404040, false);
+        GuiDraw.drawString(I18n.format(lineKey) + ": " + value, x, y, 0x404040, false);
     }
 
     @Override
@@ -151,20 +139,17 @@ public class PluginGT5VeinStat extends PluginGT5Base {
         public PositionedStack positionedStackBetween;
         public PositionedStack positionedStackSporadic;
 
-        public CachedVeinStatRecipe(String veinName,
-                                    List<ItemStack> stackListPrimary,
-                                    List<ItemStack> stackListSecondary,
-                                    List<ItemStack> stackListBetween,
-                                    List<ItemStack> stackListSporadic) {
+        public CachedVeinStatRecipe(
+                String veinName,
+                List<ItemStack> stackListPrimary,
+                List<ItemStack> stackListSecondary,
+                List<ItemStack> stackListBetween,
+                List<ItemStack> stackListSporadic) {
             this.veinName = veinName;
-            positionedStackPrimary = new PositionedStack(stackListPrimary, 2,
-                0);
-            positionedStackSecondary = new PositionedStack(stackListSecondary
-                , 22, 0);
-            positionedStackBetween = new PositionedStack(stackListBetween, 42
-                , 0);
-            positionedStackSporadic = new PositionedStack(stackListSporadic,
-                62, 0);
+            positionedStackPrimary = new PositionedStack(stackListPrimary, 2, 0);
+            positionedStackSecondary = new PositionedStack(stackListSecondary, 22, 0);
+            positionedStackBetween = new PositionedStack(stackListBetween, 42, 0);
+            positionedStackSporadic = new PositionedStack(stackListSporadic, 62, 0);
         }
 
         @Override
@@ -185,7 +170,5 @@ public class PluginGT5VeinStat extends PluginGT5Base {
         public PositionedStack getResult() {
             return null;
         }
-
     }
-
 }
