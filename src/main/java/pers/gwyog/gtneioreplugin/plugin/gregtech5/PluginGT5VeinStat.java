@@ -27,11 +27,7 @@ public class PluginGT5VeinStat extends PluginGT5Base {
     @Override
     public void loadCraftingRecipes(ItemStack stack) {
         if (stack.getUnlocalizedName().startsWith("gt.blockores")) {
-            if (stack.getItemDamage() > 16000) {
-                super.loadCraftingRecipes(stack);
-            } else {
-                loadMatchingVeins((short) (stack.getItemDamage() % 1000));
-            }
+            loadMatchingVeins((short) (stack.getItemDamage() % 1000));
         } else super.loadCraftingRecipes(stack);
     }
 

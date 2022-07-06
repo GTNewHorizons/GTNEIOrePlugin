@@ -14,13 +14,15 @@ import pers.gwyog.gtneioreplugin.util.GT5OreSmallHelper.OreSmallWrapper;
 
 public class PluginGT5SmallOreStat extends PluginGT5Base {
 
+    private static final int SMALL_ORE_BASE_META = 16000;
+
     @Override
     public void drawExtras(int recipe) {
         CachedOreSmallRecipe crecipe = (CachedOreSmallRecipe) this.arecipes.get(recipe);
         OreSmallWrapper oreSmall = GT5OreSmallHelper.mapOreSmallWrapper.get(crecipe.oreGenName);
         String sDimNames = GT5OreSmallHelper.bufferedDims.get(oreSmall);
         GuiDraw.drawString(
-                I18n.format("gtnop.gui.nei.oreName") + ": " + getGTOreLocalizedName((short) (oreSmall.oreMeta + 16000)),
+                I18n.format("gtnop.gui.nei.oreName") + ": " + getGTOreLocalizedName((short) (oreSmall.oreMeta + SMALL_ORE_BASE_META)),
                 2,
                 18,
                 0x404040,
@@ -52,10 +54,6 @@ public class PluginGT5SmallOreStat extends PluginGT5Base {
     @Override
     public void loadCraftingRecipes(ItemStack stack) {
         if (stack.getUnlocalizedName().startsWith("gt.blockores")) {
-            if (stack.getItemDamage() < 16000) {
-                super.loadCraftingRecipes(stack);
-                return;
-            }
             short baseMeta = (short) (stack.getItemDamage() % 1000);
             for (OreSmallWrapper oreSmallWorldGen : GT5OreSmallHelper.mapOreSmallWrapper.values()) {
                 if (oreSmallWorldGen.oreMeta == baseMeta) {
@@ -63,7 +61,7 @@ public class PluginGT5SmallOreStat extends PluginGT5Base {
                     int maximumIndex = getMaximumMaterialIndex(baseMeta, true);
                     for (int i = 0; i < maximumIndex; i++)
                         stackList.add(new ItemStack(
-                                GregTech_API.sBlockOres1, 1, oreSmallWorldGen.oreMeta + 16000 + i * 1000));
+                                GregTech_API.sBlockOres1, 1, oreSmallWorldGen.oreMeta + SMALL_ORE_BASE_META + i * 1000));
                     List<ItemStack> materialDustStackList = new ArrayList<>();
                     for (int i = 0; i < maximumIndex; i++)
                         materialDustStackList.add(
@@ -82,7 +80,7 @@ public class PluginGT5SmallOreStat extends PluginGT5Base {
                 if (oreSmallWrapper.oreMeta == baseMeta) {
                     List<ItemStack> stackList = new ArrayList<>();
                     for (int i = 0; i < 7; i++)
-                        stackList.add(new ItemStack(GregTech_API.sBlockOres1, 1, baseMeta + 16000 + i * 1000));
+                        stackList.add(new ItemStack(GregTech_API.sBlockOres1, 1, baseMeta + SMALL_ORE_BASE_META + i * 1000));
                     List<ItemStack> materialDustStackList = new ArrayList<>();
                     for (int i = 0; i < 7; i++)
                         materialDustStackList.add(
