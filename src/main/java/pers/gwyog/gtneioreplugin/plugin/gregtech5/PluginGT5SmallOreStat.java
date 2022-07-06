@@ -1,6 +1,5 @@
 package pers.gwyog.gtneioreplugin.plugin.gregtech5;
 
-import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.util.GT_OreDictUnificator;
@@ -17,27 +16,32 @@ public class PluginGT5SmallOreStat extends PluginGT5Base {
 
     @Override
     public void drawExtras(int recipe) {
-        CachedOreSmallRecipe crecipe = (CachedOreSmallRecipe) this.arecipes.get(recipe);
-        OreSmallWrapper oreSmall = GT5OreSmallHelper.mapOreSmallWrapper.get(crecipe.oreGenName);
+        OreSmallWrapper oreSmall = getSmallOre(recipe);
+
+        drawSmallOreName(oreSmall);
+        drawSmallOreInfo(oreSmall);
+
         String sDimNames = GT5OreSmallHelper.bufferedDims.get(oreSmall);
-        GuiDraw.drawString(
-                I18n.format("gtnop.gui.nei.oreName") + ": "
-                        + getGTOreLocalizedName((short) (oreSmall.oreMeta + SMALL_ORE_BASE_META)),
-                2,
-                18,
-                0x404040,
-                false);
-
-        GuiDraw.drawString(
-                I18n.format("gtnop.gui.nei.genHeight") + ": " + oreSmall.worldGenHeightRange, 2, 31, 0x404040, false);
-        GuiDraw.drawString(
-                I18n.format("gtnop.gui.nei.amount") + ": " + oreSmall.amountPerChunk, 2, 44, 0x404040, false);
-        GuiDraw.drawString(
-                I18n.format("gtnop.gui.nei.chanceDrops") + ": ", 2, 83 + getRestrictBiomeOffset(), 0x404040, false);
-        GuiDraw.drawString(I18n.format("gtnop.gui.nei.worldNames") + ": ", 2, 100, 0x404040, false);
-
         drawDimNames(sDimNames);
+
         drawSeeAllRecipesLabel();
+    }
+
+    private void drawSmallOreName(OreSmallWrapper oreSmall) {
+        String oreName = getGTOreLocalizedName((short) (oreSmall.oreMeta + SMALL_ORE_BASE_META));
+        drawLine("gtnop.gui.nei.oreName", oreName, 2, 18);
+    }
+
+    private void drawSmallOreInfo(OreSmallWrapper oreSmall) {
+        drawLine("gtnop.gui.nei.genHeight", oreSmall.worldGenHeightRange, 2, 31);
+        drawLine("gtnop.gui.nei.amount", String.valueOf(oreSmall.amountPerChunk), 2, 44);
+        drawLine("gtnop.gui.nei.chanceDrops", "", 2, 83 + getRestrictBiomeOffset());
+        drawLine("gtnop.gui.nei.worldNames", "", 2, 100);
+    }
+
+    private OreSmallWrapper getSmallOre(int recipe) {
+        CachedOreSmallRecipe crecipe = (CachedOreSmallRecipe) this.arecipes.get(recipe);
+        return GT5OreSmallHelper.mapOreSmallWrapper.get(crecipe.oreGenName);
     }
 
     public int getRestrictBiomeOffset() {
@@ -112,8 +116,7 @@ public class PluginGT5SmallOreStat extends PluginGT5Base {
      */
     @Override
     protected String getDimensionNames(int recipe) {
-        CachedOreSmallRecipe crecipe = (CachedOreSmallRecipe) this.arecipes.get(recipe);
-        OreSmallWrapper oreSmall = GT5OreSmallHelper.mapOreSmallWrapper.get(crecipe.oreGenName);
+        OreSmallWrapper oreSmall = getSmallOre(recipe);
         return GT5OreSmallHelper.bufferedDims.get(oreSmall);
     }
 

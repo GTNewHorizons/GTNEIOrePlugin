@@ -2,7 +2,6 @@ package pers.gwyog.gtneioreplugin.plugin.gregtech5;
 
 import static pers.gwyog.gtneioreplugin.util.OreVeinLayer.*;
 
-import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import cpw.mods.fml.common.Loader;
 import java.util.ArrayList;
@@ -71,7 +70,7 @@ public class PluginGT5VeinStat extends PluginGT5Base {
         return GT5OreLayerHelper.mapOreLayerWrapper.get(crecipe.veinName);
     }
 
-    private void drawVeinName(OreLayerWrapper oreLayer) {
+    private static void drawVeinName(OreLayerWrapper oreLayer) {
         if (Loader.isModLoaded("visualprospecting")) {
             drawVeinNameLine(I18n.format(oreLayer.veinName) + " ");
         } else {
@@ -82,28 +81,24 @@ public class PluginGT5VeinStat extends PluginGT5Base {
         }
     }
 
-    private void drawVeinNameLine(String veinName) {
+    private static void drawVeinNameLine(String veinName) {
         drawLine("gtnop.gui.nei.veinName", veinName + I18n.format("gtnop.gui" + ".nei.vein"), 2, 20);
     }
 
-    private void drawVeinLayerNames(OreLayerWrapper oreLayer) {
+    private static void drawVeinLayerNames(OreLayerWrapper oreLayer) {
         drawVeinLayerNameLine(oreLayer, VEIN_PRIMARY, 50);
         drawVeinLayerNameLine(oreLayer, VEIN_SECONDARY, 60);
         drawVeinLayerNameLine(oreLayer, VEIN_BETWEEN, 70);
         drawVeinLayerNameLine(oreLayer, VEIN_SPORADIC, 80);
     }
 
-    private void drawVeinLayerNameLine(OreLayerWrapper oreLayer, int veinLayer, int height) {
+    private static void drawVeinLayerNameLine(OreLayerWrapper oreLayer, int veinLayer, int height) {
         drawLine(getOreVeinLayerName(veinLayer), getGTOreLocalizedName(oreLayer.Meta[veinLayer]), 2, height);
     }
 
-    private void drawVeinInfo(OreLayerWrapper oreLayer) {
+    private static void drawVeinInfo(OreLayerWrapper oreLayer) {
         drawLine("gtnop.gui.nei.genHeight", oreLayer.worldGenHeightRange, 2, 90);
         drawLine("gtnop.gui.nei.weightedChance", Integer.toString(oreLayer.randomWeight), 100, 90);
-    }
-
-    private void drawLine(String lineKey, String value, int x, int y) {
-        GuiDraw.drawString(I18n.format(lineKey) + ": " + value, x, y, 0x404040, false);
     }
 
     @Override

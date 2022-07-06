@@ -47,6 +47,10 @@ public abstract class PluginGT5Base extends PluginBase {
         return "gt.blockores." + index + ".name";
     }
 
+    static void drawLine(String lineKey, String value, int x, int y) {
+        GuiDraw.drawString(I18n.format(lineKey) + ": " + value, x, y, 0x404040, false);
+    }
+
     /**
      * Add lines to the current tooltip if appropriate
      *
