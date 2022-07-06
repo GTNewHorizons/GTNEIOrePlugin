@@ -10,108 +10,9 @@ import pers.gwyog.gtneioreplugin.util.GT5OreLayerHelper;
 import pers.gwyog.gtneioreplugin.util.GT5OreLayerHelper.OreLayerWrapper;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class PluginGT5VeinStat extends PluginGT5Base {
-
-    // Unused
-    public static String[] getLocalizedVeinName(OreLayerWrapper oreLayer) {
-        String unlocalizedName = oreLayer.veinName;
-        if (unlocalizedName.startsWith("ore.mix.custom."))
-            return get_Cnames(oreLayer);//I18n.format("gtnop.ore.custom.name") + I18n.format("gtnop.ore.vein.name") + unlocalizedName.substring(15);
-        else
-            return new String[]{I18n.format("gtnop." + unlocalizedName) + I18n.format("gtnop.ore.vein.name")};
-    }
-
-    // Unused
-    public static String coustomVeinRenamer(OreLayerWrapper oreLayer) {
-        Set<String> s = new HashSet<String>();
-        for (int i = 0; i < 4; i++)
-            s.add(getGTOreLocalizedName(oreLayer.Meta[i]).replaceAll(" ", ""));
-        return s.toString()
-                .replace("[".charAt(0), ",".charAt(0))
-                .replace("]".charAt(0), ",".charAt(0))
-                .replaceAll(" Ore", ",")
-                .replaceAll("Ore", ",")
-                .replaceAll(" Sand", ",")
-                .replaceAll("Sand", ",")
-                .replaceAll("Stone", ",")
-                .replaceAll(" Stone", ",")
-                .replaceAll("Earth", ",")
-                .replaceAll(" Earth", ",")
-                .replaceAll("Infused", ",")
-                .replaceAll(" Infused", ",")
-                .replaceAll(",", "")
-                .trim();
-    }
-    
-    /*public String getWeightedChance(OreLayerWrapper oreLayer) {
-        String weightedChance = "";
-        for (int i=0; i < oreLayer.alloweddims.size(); i++) {
-        if (oreLayer.alloweddims.get(i) && (oreLayer.Weight.get(i) != 0)) {
-            if (!weightedChance.isEmpty())
-                weightedChance += ", ";
-            weightedChance += String.format("%.2f%%", (100.0f*oreLayer.Weight.get(i))/GT5OreLayerHelper.weightPerWorld[i]);
-        }
-        }
-        return weightedChance;
-    }*/
-
-    // Unused
-    public static String[] get_Cnames(OreLayerWrapper oreLayer) {
-
-        String[] splt = coustomVeinRenamer(oreLayer).split("\\s");
-    	/*HashSet<String> h = new HashSet<String>();
-    	for (int i=0; i < splt.length;i++) {
-    		h.add(splt[i]);
-    	}
-    	h.toArray(splt);*/
-
-        String[] ret = {oreLayer.veinName.replace("ore.mix.custom.", "") + " ", " ", " "};
-        for (int i = 0; i < ret.length; i++) {
-            ret[i] = ret[i].trim();
-        }
-        for (int i = 0; i < splt.length; i++) {
-            //FMLLog.info("Split:"+splt[i]);
-            //FMLLog.info("I:"+Integer.toString(i));
-            if (ret[0].length() + splt[i].length() <= 20)
-                ret[0] = ret[0] + splt[i] + " ";
-            if ((ret[0].length() + splt[i].length() > 20) && ret[1].length() + splt[i].length() <= 70 && !ret[0].contains(splt[i]))
-                ret[1] = ret[1] + splt[i] + " ";
-            if ((ret[0].length() + splt[i].length() > 20) && (ret[1].length() + splt[i].length() > 70) && ret[2].length() + splt[i].length() <= 70 && !ret[1].contains(splt[i]))
-                ret[2] = ret[2] + splt[i] + " ";
-        }
-        for (int i = 0; i < ret.length; i++) {
-            ret[i] = ret[i].trim();
-        }
-
-        if (ret[2].isEmpty() && !ret[1].isEmpty())
-            if (ret[1].length() <= 65)
-                ret[1] = ret[1] + " Vein";
-            else
-                ret[2] = ret[2] + "Vein";
-        else if (ret[1].isEmpty() && ret[2].isEmpty() && !ret[0].isEmpty())
-            if (ret[0].length() <= 15)
-                ret[0] = ret[0] + " Vein";
-            else
-                ret[1] = ret[1] + "Vein";
-        else if (!(ret[1].isEmpty() && ret[2].isEmpty()))
-            ret[2] = ret[2] + "Vein";
-        String[] ret2 = new String[2];
-        if (ret[2].isEmpty() && !ret[1].isEmpty()) {
-            ret2[0] = ret[0];
-            ret2[1] = ret[1];
-            return ret2;
-        }
-        String[] ret1 = new String[1];
-        if (ret[1].isEmpty() && ret[2].isEmpty() && !ret[0].isEmpty()) {
-            ret1[0] = ret[0];
-            return ret1;
-        } else
-            return ret;
-    }
 
     @Override
     public void loadCraftingRecipes(String outputId, Object... results) {
@@ -195,7 +96,6 @@ public class PluginGT5VeinStat extends PluginGT5Base {
 
         drawDimNames(sDimNames);
 
-        //if (GT5OreLayerHelper.restrictBiomeSupport) GuiDraw.drawString(I18n.format("gtnop.gui.nei.restrictBiome") + ": " + getBiomeTranslated(oreLayer.restrictBiome), 2, 122, 0x404040, false);
         drawSeeAllRecipesLabel();
     }
 
