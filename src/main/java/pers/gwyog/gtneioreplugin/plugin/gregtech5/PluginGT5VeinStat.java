@@ -62,43 +62,71 @@ public class PluginGT5VeinStat extends PluginGT5Base {
 
     @Override
     public void drawExtras(int recipe) {
-        CachedVeinStatRecipe crecipe =
-            (CachedVeinStatRecipe) this.arecipes.get(recipe);
-        OreLayerWrapper oreLayer =
-            GT5OreLayerHelper.mapOreLayerWrapper.get(crecipe.veinName);
+        OreLayerWrapper oreLayer = getOreLayer(recipe);
+
+        drawVeinName(oreLayer);
+        drawVeinLayerNames(oreLayer);
+        drawVeinInfo(oreLayer);
 
         String sDimNames = GT5OreLayerHelper.bufferedDims.get(oreLayer);
-
-        if (Loader.isModLoaded("visualprospecting")) {
-            GuiDraw.drawString(I18n.format("gtnop.gui.nei.veinName") + ": " + I18n.format(oreLayer.veinName) + " " + I18n.format("gtnop.gui.nei.vein"), 2, 20, 0x404040, false);
-        } else {
-            if (getGTOreLocalizedName(oreLayer.Meta[VEIN_PRIMARY]).contains(
-                "Ore"))
-                GuiDraw.drawString(I18n.format("gtnop.gui.nei.veinName") +
-                    ":" + " " + getGTOreLocalizedName(oreLayer.Meta[VEIN_PRIMARY]).split("Ore")[0] + "" + I18n.format("gtnop.gui.nei.vein"), 2, 20, 0x404040, false);
-            else if (getGTOreLocalizedName(oreLayer.Meta[VEIN_PRIMARY]).contains("Sand"))
-                GuiDraw.drawString(I18n.format("gtnop.gui.nei.veinName") +
-                    ":" + " " + getGTOreLocalizedName(oreLayer.Meta[VEIN_PRIMARY]).split("Sand")[0] + "" + I18n.format("gtnop.gui.nei.vein"), 2, 20, 0x404040, false);
-            else
-                GuiDraw.drawString(I18n.format("gtnop.gui.nei.veinName") +
-                    ":" + " " + getGTOreLocalizedName(oreLayer.Meta[VEIN_PRIMARY]) + " " + I18n.format("gtnop.gui.nei.vein"), 2, 20, 0x404040, false);
-        }
-
-        GuiDraw.drawString(I18n.format("gtnop.gui.nei.primaryOre") + ": " + getGTOreLocalizedName(oreLayer.Meta[VEIN_PRIMARY]), 2, 50, 0x404040, false);
-
-        GuiDraw.drawString(I18n.format("gtnop.gui.nei.secondaryOre") + ": " + getGTOreLocalizedName(oreLayer.Meta[VEIN_SECONDARY]), 2, 60, 0x404040, false);
-
-        GuiDraw.drawString(I18n.format("gtnop.gui.nei.betweenOre") + ": " + getGTOreLocalizedName(oreLayer.Meta[VEIN_BETWEEN]), 2, 70, 0x404040, false);
-
-        GuiDraw.drawString(I18n.format("gtnop.gui.nei.sporadicOre") + ": " + getGTOreLocalizedName(oreLayer.Meta[VEIN_SPORADIC]), 2, 80, 0x404040, false);
-
-        GuiDraw.drawString(I18n.format("gtnop.gui.nei.genHeight") + ": " + oreLayer.worldGenHeightRange, 2, 90, 0x404040, false);
-
-        GuiDraw.drawString(I18n.format("gtnop.gui.nei.weightedChance") + ": " + Integer.toString(oreLayer.randomWeight), 100, 90, 0x404040, false);
-
         drawDimNames(sDimNames);
 
         drawSeeAllRecipesLabel();
+    }
+
+    private OreLayerWrapper getOreLayer(int recipe) {
+        CachedVeinStatRecipe crecipe =
+            (CachedVeinStatRecipe) this.arecipes.get(recipe);
+        return GT5OreLayerHelper.mapOreLayerWrapper.get(crecipe.veinName);
+    }
+
+    private void drawVeinName(OreLayerWrapper oreLayer) {
+        if (Loader.isModLoaded("visualprospecting")) {
+            drawVeinNameLine(I18n.format(oreLayer.veinName) + " ");
+        } else {
+            String veinName =
+                getGTOreLocalizedName(oreLayer.Meta[VEIN_PRIMARY]);
+            if (veinName.contains("Ore"))
+                drawVeinNameLine(veinName.split("Ore")[0]);
+            else if (veinName.contains("Sand"))
+                drawVeinNameLine(veinName.split("Sand")[0]);
+            else drawVeinNameLine(veinName + " ");
+        }
+    }
+
+    private void drawVeinNameLine(String veinName) {
+        drawLine("gtnop.gui.nei.veinName", veinName + I18n.format("gtnop.gui" +
+            ".nei.vein"), 2, 20);
+    }
+
+    private void drawVeinLayerNames(OreLayerWrapper oreLayer) {
+        drawVeinLayerNameLine(oreLayer, "gtnop.gui.nei.primaryOre",
+            VEIN_PRIMARY, 50);
+        drawVeinLayerNameLine(oreLayer, "gtnop.gui.nei.secondaryOre",
+            VEIN_SECONDARY, 60);
+        drawVeinLayerNameLine(oreLayer, "gtnop.gui.nei.betweenOre",
+            VEIN_BETWEEN, 70);
+        drawVeinLayerNameLine(oreLayer, "gtnop.gui.nei.sporadicOre",
+            VEIN_SPORADIC, 80);
+    }
+
+    private void drawVeinLayerNameLine(OreLayerWrapper oreLayer,
+                                       String localizationKey, int veinLayer,
+                                       int height) {
+        drawLine(localizationKey,
+            getGTOreLocalizedName(oreLayer.Meta[veinLayer]), 2, height);
+    }
+
+    private void drawVeinInfo(OreLayerWrapper oreLayer) {
+        drawLine("gtnop.gui.nei.genHeight", oreLayer.worldGenHeightRange, 2,
+            90);
+        drawLine("gtnop.gui.nei.weightedChance",
+            Integer.toString(oreLayer.randomWeight), 100, 90);
+    }
+
+    private void drawLine(String lineKey, String value, int x, int y) {
+        GuiDraw.drawString(I18n.format(lineKey) + ": " + value, x, y,
+            0x404040, false);
     }
 
     @Override
@@ -119,10 +147,7 @@ public class PluginGT5VeinStat extends PluginGT5Base {
      */
     @Override
     protected String getDimensionNames(int recipe) {
-        CachedVeinStatRecipe crecipe =
-            (CachedVeinStatRecipe) this.arecipes.get(recipe);
-        OreLayerWrapper oreLayer =
-            GT5OreLayerHelper.mapOreLayerWrapper.get(crecipe.veinName);
+        OreLayerWrapper oreLayer = getOreLayer(recipe);
         return GT5OreLayerHelper.bufferedDims.get(oreLayer);
     }
 
