@@ -12,11 +12,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static pers.gwyog.gtneioreplugin.util.OreVeinLayer.*;
+
 public class PluginGT5VeinStat extends PluginGT5Base {
-    private static final int VEIN_PRIMARY = 0;
-    private static final int VEIN_SECONDARY = 1;
-    private static final int VEIN_BETWEEN = 2;
-    private static final int VEIN_SPORADIC = 3;
 
     @Override
     public void loadCraftingRecipes(String outputId, Object... results) {
@@ -95,25 +93,20 @@ public class PluginGT5VeinStat extends PluginGT5Base {
     }
 
     private void drawVeinNameLine(String veinName) {
-        drawLine("gtnop.gui.nei.veinName", veinName + I18n.format("gtnop.gui" +
-            ".nei.vein"), 2, 20);
+        drawLine("gtnop.gui.nei.veinName",
+            veinName + I18n.format("gtnop.gui" + ".nei.vein"), 2, 20);
     }
 
     private void drawVeinLayerNames(OreLayerWrapper oreLayer) {
-        drawVeinLayerNameLine(oreLayer, "gtnop.gui.nei.primaryOre",
-            VEIN_PRIMARY, 50);
-        drawVeinLayerNameLine(oreLayer, "gtnop.gui.nei.secondaryOre",
-            VEIN_SECONDARY, 60);
-        drawVeinLayerNameLine(oreLayer, "gtnop.gui.nei.betweenOre",
-            VEIN_BETWEEN, 70);
-        drawVeinLayerNameLine(oreLayer, "gtnop.gui.nei.sporadicOre",
-            VEIN_SPORADIC, 80);
+        drawVeinLayerNameLine(oreLayer, VEIN_PRIMARY, 50);
+        drawVeinLayerNameLine(oreLayer, VEIN_SECONDARY, 60);
+        drawVeinLayerNameLine(oreLayer, VEIN_BETWEEN, 70);
+        drawVeinLayerNameLine(oreLayer, VEIN_SPORADIC, 80);
     }
 
     private void drawVeinLayerNameLine(OreLayerWrapper oreLayer,
-                                       String localizationKey, int veinLayer,
-                                       int height) {
-        drawLine(localizationKey,
+                                       int veinLayer, int height) {
+        drawLine(getOreVeinLayerName(veinLayer),
             getGTOreLocalizedName(oreLayer.Meta[veinLayer]), 2, height);
     }
 

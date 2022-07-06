@@ -9,11 +9,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import static pers.gwyog.gtneioreplugin.util.OreVeinLayer.*;
+
 public class GT5OreLayerHelper {
-    private static final int VEIN_PRIMARY = 0;
-    private static final int VEIN_SECONDARY = 1;
-    private static final int VEIN_BETWEEN = 2;
-    private static final int VEIN_SPORADIC = 3;
 
     private static final int DIMENSION_COUNT = 33;
     public static Integer[] weightPerWorld = new Integer[DIMENSION_COUNT];
