@@ -105,7 +105,7 @@ public class DimensionHelper {
         "VB", // GalaxySpace_VegaB
     };
 
-    private static HashMap<String, List<String>> tooltipBuffer = new HashMap<>();
+    private static final HashMap<String, List<String>> tooltipBuffer = new HashMap<>();
 
     private static List<String> computeString(String line) {
         String[] dims = line.split(",");

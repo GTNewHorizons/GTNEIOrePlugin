@@ -11,7 +11,6 @@ public class GuiRecipeHelper {
             "pers.gwyog.gtneioreplugin.util.GuiRecipeHelper failed setting up reflection : ";
     private static final int DEFAULT_XSIZE = 176;
 
-    private static Class<GuiRecipe> guiRecipeClass;
     public static Field xSizeField;
     public static Field guiLeftField;
     public static Field guiTopField;
@@ -79,7 +78,7 @@ public class GuiRecipeHelper {
      * Initialize the GuiRecipe Field accessors through reflection
      */
     public GuiRecipeHelper() {
-        guiRecipeClass = GuiRecipe.class;
+        Class<GuiRecipe> guiRecipeClass = GuiRecipe.class;
         try {
             guiLeftField = guiRecipeClass.getField("guiLeft");
             guiLeftField.setAccessible(true);

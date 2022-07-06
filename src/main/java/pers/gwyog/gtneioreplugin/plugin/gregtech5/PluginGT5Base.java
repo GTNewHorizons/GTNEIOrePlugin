@@ -74,7 +74,7 @@ public abstract class PluginGT5Base extends PluginBase {
     /**
      * The dimension names for a given recipe index
      *
-     * @param The recipe index being handled
+     * @param recipe The recipe index being handled
      * @return A CSV string of dimension name abbreviations
      */
     protected abstract String getDimensionNames(int recipe);

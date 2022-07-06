@@ -16,7 +16,7 @@ public class StringPaddingHack {
      * @param strings List of strings to wrap into columns
      * @param numColumns Number of columns, minimum of 1
      * @param minColumnSpacing Minimum amount of extra spaces between columns.
-     * @return
+     * @return strings wrapped into columns
      */
     public static String[] stringsToSpacedColumns(String[] strings, int numColumns, int minColumnSpacing) {
         if (numColumns < 1) {
