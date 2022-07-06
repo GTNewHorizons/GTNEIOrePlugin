@@ -3,37 +3,28 @@ package pers.gwyog.gtneioreplugin.plugin.gregtech5;
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import cpw.mods.fml.common.Loader;
-import gregtech.api.GregTech_API;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import pers.gwyog.gtneioreplugin.util.GT5OreLayerHelper;
 import pers.gwyog.gtneioreplugin.util.GT5OreLayerHelper.OreLayerWrapper;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class PluginGT5VeinStat extends PluginGT5Base {
+    private static final int VEIN_PRIMARY = 0;
+    private static final int VEIN_SECONDARY = 1;
+    private static final int VEIN_BETWEEN = 2;
+    private static final int VEIN_SPORADIC = 3;
 
     @Override
     public void loadCraftingRecipes(String outputId, Object... results) {
         if (outputId.equals(getOutputId())) {
-            for (String veinName : GT5OreLayerHelper.mapOreLayerWrapper.keySet()) {
-                OreLayerWrapper oreLayerWrapper = GT5OreLayerHelper.mapOreLayerWrapper.get(veinName);
-                int maximumMaterialIndex = 7;
-                List<ItemStack> stackListPrimary = new ArrayList<>();
-                List<ItemStack> stackListSecondary = new ArrayList<>();
-                List<ItemStack> stackListBetween = new ArrayList<>();
-                List<ItemStack> stackListSporadic = new ArrayList<>();
-                for (int i = 0; i < maximumMaterialIndex; i++) {
-                    stackListPrimary.add(new ItemStack(GregTech_API.sBlockOres1, 1, oreLayerWrapper.Meta[0] + i * 1000));
-                    stackListSecondary.add(new ItemStack(GregTech_API.sBlockOres1, 1, oreLayerWrapper.Meta[1] + i * 1000));
-                    stackListBetween.add(new ItemStack(GregTech_API.sBlockOres1, 1, oreLayerWrapper.Meta[2] + i * 1000));
-                    stackListSporadic.add(new ItemStack(GregTech_API.sBlockOres1, 1, oreLayerWrapper.Meta[3] + i * 1000));
-                }
-                this.arecipes.add(new CachedVeinStatRecipe(veinName, stackListPrimary, stackListSecondary, stackListBetween, stackListSporadic));
+            for (OreLayerWrapper oreVein : getAllVeins()) {
+                addVeinWithLayers(oreVein, 7);
             }
-        } else
-            super.loadCraftingRecipes(outputId, results);
+        } else super.loadCraftingRecipes(outputId, results);
     }
 
     @Override
@@ -41,56 +32,65 @@ public class PluginGT5VeinStat extends PluginGT5Base {
         if (stack.getUnlocalizedName().startsWith("gt.blockores")) {
             if (stack.getItemDamage() > 16000) {
                 super.loadCraftingRecipes(stack);
-                return;
+            } else {
+                loadMatchingVeins((short) (stack.getItemDamage() % 1000));
             }
-            short baseMeta = (short) (stack.getItemDamage() % 1000);
-            for (OreLayerWrapper worldGen : GT5OreLayerHelper.mapOreLayerWrapper.values()) {
-                if (worldGen.Meta[0] == baseMeta || worldGen.Meta[1] == baseMeta || worldGen.Meta[2] == baseMeta || worldGen.Meta[3] == baseMeta) {
-                    int maximumMaterialIndex =
-                        getMaximumMaterialIndex(baseMeta, false);
-                    List<ItemStack> stackListPrimary = new ArrayList<>();
-                    List<ItemStack> stackListSecondary = new ArrayList<>();
-                    List<ItemStack> stackListBetween = new ArrayList<>();
-                    List<ItemStack> stackListSporadic = new ArrayList<>();
-                    for (int i = 0; i < maximumMaterialIndex; i++) {
-                        stackListPrimary.add(new ItemStack(GregTech_API.sBlockOres1, 1, worldGen.Meta[0] + i * 1000));
-                        stackListSecondary.add(new ItemStack(GregTech_API.sBlockOres1, 1, worldGen.Meta[1] + i * 1000));
-                        stackListBetween.add(new ItemStack(GregTech_API.sBlockOres1, 1, worldGen.Meta[2] + i * 1000));
-                        stackListSporadic.add(new ItemStack(GregTech_API.sBlockOres1, 1, worldGen.Meta[3] + i * 1000));
-                    }
-                    this.arecipes.add(new CachedVeinStatRecipe(worldGen.veinName, stackListPrimary, stackListSecondary, stackListBetween, stackListSporadic));
-                }
+        } else super.loadCraftingRecipes(stack);
+    }
+
+    private void loadMatchingVeins(short oreId) {
+        for (OreLayerWrapper oreVein : getAllVeins()) {
+            if (oreVein.containsOre(oreId)) {
+                addVeinWithLayers(oreVein, getMaximumMaterialIndex(oreId,
+                    false));
             }
-        } else
-            super.loadCraftingRecipes(stack);
+        }
+    }
+
+    private void addVeinWithLayers(OreLayerWrapper oreVein,
+                                   int maximumMaterialIndex) {
+        this.arecipes.add(new CachedVeinStatRecipe(oreVein.veinName,
+            oreVein.getVeinLayerOre(maximumMaterialIndex, VEIN_PRIMARY),
+            oreVein.getVeinLayerOre(maximumMaterialIndex, VEIN_SECONDARY),
+            oreVein.getVeinLayerOre(maximumMaterialIndex, VEIN_BETWEEN),
+            oreVein.getVeinLayerOre(maximumMaterialIndex, VEIN_SPORADIC)));
+    }
+
+    private Collection<OreLayerWrapper> getAllVeins() {
+        return GT5OreLayerHelper.mapOreLayerWrapper.values();
     }
 
     @Override
     public void drawExtras(int recipe) {
-        CachedVeinStatRecipe crecipe = (CachedVeinStatRecipe) this.arecipes.get(recipe);
-        OreLayerWrapper oreLayer = GT5OreLayerHelper.mapOreLayerWrapper.get(crecipe.veinName);
+        CachedVeinStatRecipe crecipe =
+            (CachedVeinStatRecipe) this.arecipes.get(recipe);
+        OreLayerWrapper oreLayer =
+            GT5OreLayerHelper.mapOreLayerWrapper.get(crecipe.veinName);
 
         String sDimNames = GT5OreLayerHelper.bufferedDims.get(oreLayer);
 
-        if(Loader.isModLoaded("visualprospecting")) {
+        if (Loader.isModLoaded("visualprospecting")) {
             GuiDraw.drawString(I18n.format("gtnop.gui.nei.veinName") + ": " + I18n.format(oreLayer.veinName) + " " + I18n.format("gtnop.gui.nei.vein"), 2, 20, 0x404040, false);
-        }
-        else {
-            if (getGTOreLocalizedName(oreLayer.Meta[0]).contains("Ore"))
-                GuiDraw.drawString(I18n.format("gtnop.gui.nei.veinName") + ": " + getGTOreLocalizedName(oreLayer.Meta[0]).split("Ore")[0] + "" + I18n.format("gtnop.gui.nei.vein"), 2, 20, 0x404040, false);
-            else if (getGTOreLocalizedName(oreLayer.Meta[0]).contains("Sand"))
-                GuiDraw.drawString(I18n.format("gtnop.gui.nei.veinName") + ": " + getGTOreLocalizedName(oreLayer.Meta[0]).split("Sand")[0] + "" + I18n.format("gtnop.gui.nei.vein"), 2, 20, 0x404040, false);
+        } else {
+            if (getGTOreLocalizedName(oreLayer.Meta[VEIN_PRIMARY]).contains(
+                "Ore"))
+                GuiDraw.drawString(I18n.format("gtnop.gui.nei.veinName") +
+                    ":" + " " + getGTOreLocalizedName(oreLayer.Meta[VEIN_PRIMARY]).split("Ore")[0] + "" + I18n.format("gtnop.gui.nei.vein"), 2, 20, 0x404040, false);
+            else if (getGTOreLocalizedName(oreLayer.Meta[VEIN_PRIMARY]).contains("Sand"))
+                GuiDraw.drawString(I18n.format("gtnop.gui.nei.veinName") +
+                    ":" + " " + getGTOreLocalizedName(oreLayer.Meta[VEIN_PRIMARY]).split("Sand")[0] + "" + I18n.format("gtnop.gui.nei.vein"), 2, 20, 0x404040, false);
             else
-                GuiDraw.drawString(I18n.format("gtnop.gui.nei.veinName") + ": " + getGTOreLocalizedName(oreLayer.Meta[0]) + " " + I18n.format("gtnop.gui.nei.vein"), 2, 20, 0x404040, false);
+                GuiDraw.drawString(I18n.format("gtnop.gui.nei.veinName") +
+                    ":" + " " + getGTOreLocalizedName(oreLayer.Meta[VEIN_PRIMARY]) + " " + I18n.format("gtnop.gui.nei.vein"), 2, 20, 0x404040, false);
         }
 
-        GuiDraw.drawString(I18n.format("gtnop.gui.nei.primaryOre") + ": " + getGTOreLocalizedName(oreLayer.Meta[0]), 2, 50, 0x404040, false);
+        GuiDraw.drawString(I18n.format("gtnop.gui.nei.primaryOre") + ": " + getGTOreLocalizedName(oreLayer.Meta[VEIN_PRIMARY]), 2, 50, 0x404040, false);
 
-        GuiDraw.drawString(I18n.format("gtnop.gui.nei.secondaryOre") + ": " + getGTOreLocalizedName(oreLayer.Meta[1]), 2, 60, 0x404040, false);
+        GuiDraw.drawString(I18n.format("gtnop.gui.nei.secondaryOre") + ": " + getGTOreLocalizedName(oreLayer.Meta[VEIN_SECONDARY]), 2, 60, 0x404040, false);
 
-        GuiDraw.drawString(I18n.format("gtnop.gui.nei.betweenOre") + ": " + getGTOreLocalizedName(oreLayer.Meta[2]), 2, 70, 0x404040, false);
+        GuiDraw.drawString(I18n.format("gtnop.gui.nei.betweenOre") + ": " + getGTOreLocalizedName(oreLayer.Meta[VEIN_BETWEEN]), 2, 70, 0x404040, false);
 
-        GuiDraw.drawString(I18n.format("gtnop.gui.nei.sporadicOre") + ": " + getGTOreLocalizedName(oreLayer.Meta[3]), 2, 80, 0x404040, false);
+        GuiDraw.drawString(I18n.format("gtnop.gui.nei.sporadicOre") + ": " + getGTOreLocalizedName(oreLayer.Meta[VEIN_SPORADIC]), 2, 80, 0x404040, false);
 
         GuiDraw.drawString(I18n.format("gtnop.gui.nei.genHeight") + ": " + oreLayer.worldGenHeightRange, 2, 90, 0x404040, false);
 
@@ -119,8 +119,10 @@ public class PluginGT5VeinStat extends PluginGT5Base {
      */
     @Override
     protected String getDimensionNames(int recipe) {
-        CachedVeinStatRecipe crecipe = (CachedVeinStatRecipe) this.arecipes.get(recipe);
-        OreLayerWrapper oreLayer = GT5OreLayerHelper.mapOreLayerWrapper.get(crecipe.veinName);
+        CachedVeinStatRecipe crecipe =
+            (CachedVeinStatRecipe) this.arecipes.get(recipe);
+        OreLayerWrapper oreLayer =
+            GT5OreLayerHelper.mapOreLayerWrapper.get(crecipe.veinName);
         return GT5OreLayerHelper.bufferedDims.get(oreLayer);
     }
 
@@ -131,13 +133,20 @@ public class PluginGT5VeinStat extends PluginGT5Base {
         public PositionedStack positionedStackBetween;
         public PositionedStack positionedStackSporadic;
 
-        public CachedVeinStatRecipe(String veinName, List<ItemStack> stackListPrimary, List<ItemStack> stackListSecondary,
-                                    List<ItemStack> stackListBetween, List<ItemStack> stackListSporadic) {
+        public CachedVeinStatRecipe(String veinName,
+                                    List<ItemStack> stackListPrimary,
+                                    List<ItemStack> stackListSecondary,
+                                    List<ItemStack> stackListBetween,
+                                    List<ItemStack> stackListSporadic) {
             this.veinName = veinName;
-            positionedStackPrimary = new PositionedStack(stackListPrimary, 2, 0);
-            positionedStackSecondary = new PositionedStack(stackListSecondary, 22, 0);
-            positionedStackBetween = new PositionedStack(stackListBetween, 42, 0);
-            positionedStackSporadic = new PositionedStack(stackListSporadic, 62, 0);
+            positionedStackPrimary = new PositionedStack(stackListPrimary, 2,
+                0);
+            positionedStackSecondary = new PositionedStack(stackListSecondary
+                , 22, 0);
+            positionedStackBetween = new PositionedStack(stackListBetween, 42
+                , 0);
+            positionedStackSporadic = new PositionedStack(stackListSporadic,
+                62, 0);
         }
 
         @Override
