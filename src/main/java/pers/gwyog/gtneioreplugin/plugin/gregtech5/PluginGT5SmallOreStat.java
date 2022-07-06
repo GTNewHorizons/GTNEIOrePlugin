@@ -2,7 +2,6 @@ package pers.gwyog.gtneioreplugin.plugin.gregtech5;
 
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
-import gregtech.api.GregTech_API;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.util.GT_OreDictUnificator;
 import java.util.ArrayList;
@@ -22,7 +21,8 @@ public class PluginGT5SmallOreStat extends PluginGT5Base {
         OreSmallWrapper oreSmall = GT5OreSmallHelper.mapOreSmallWrapper.get(crecipe.oreGenName);
         String sDimNames = GT5OreSmallHelper.bufferedDims.get(oreSmall);
         GuiDraw.drawString(
-                I18n.format("gtnop.gui.nei.oreName") + ": " + getGTOreLocalizedName((short) (oreSmall.oreMeta + SMALL_ORE_BASE_META)),
+                I18n.format("gtnop.gui.nei.oreName") + ": "
+                        + getGTOreLocalizedName((short) (oreSmall.oreMeta + SMALL_ORE_BASE_META)),
                 2,
                 18,
                 0x404040,
@@ -54,45 +54,44 @@ public class PluginGT5SmallOreStat extends PluginGT5Base {
     @Override
     public void loadCraftingRecipes(ItemStack stack) {
         if (stack.getUnlocalizedName().startsWith("gt.blockores")) {
-            short baseMeta = (short) (stack.getItemDamage() % 1000);
-            for (OreSmallWrapper oreSmallWorldGen : GT5OreSmallHelper.mapOreSmallWrapper.values()) {
-                if (oreSmallWorldGen.oreMeta == baseMeta) {
-                    List<ItemStack> stackList = new ArrayList<>();
-                    int maximumIndex = getMaximumMaterialIndex(baseMeta, true);
-                    for (int i = 0; i < maximumIndex; i++)
-                        stackList.add(new ItemStack(
-                                GregTech_API.sBlockOres1, 1, oreSmallWorldGen.oreMeta + SMALL_ORE_BASE_META + i * 1000));
-                    List<ItemStack> materialDustStackList = new ArrayList<>();
-                    for (int i = 0; i < maximumIndex; i++)
-                        materialDustStackList.add(
-                                GT_OreDictUnificator.get(OrePrefixes.dust, GT5OreSmallHelper.getDroppedDusts()[i], 1L));
-                    this.arecipes.add(new CachedOreSmallRecipe(
-                            oreSmallWorldGen.oreGenName,
-                            stackList,
-                            materialDustStackList,
-                            GT5OreSmallHelper.mapOreMetaToOreDrops.get(baseMeta)));
-                }
-            }
+            short oreMeta = (short) (stack.getItemDamage() % 1000);
+            loadSmallOre(oreMeta, getMaximumMaterialIndex(oreMeta, true));
         } else if (GT5OreSmallHelper.mapOreDropUnlocalizedNameToOreMeta.containsKey(stack.getUnlocalizedName())) {
-            short baseMeta = GT5OreSmallHelper.mapOreDropUnlocalizedNameToOreMeta.get(stack.getUnlocalizedName());
-            for (String oreGenName : GT5OreSmallHelper.mapOreSmallWrapper.keySet()) {
-                OreSmallWrapper oreSmallWrapper = GT5OreSmallHelper.mapOreSmallWrapper.get(oreGenName);
-                if (oreSmallWrapper.oreMeta == baseMeta) {
-                    List<ItemStack> stackList = new ArrayList<>();
-                    for (int i = 0; i < 7; i++)
-                        stackList.add(new ItemStack(GregTech_API.sBlockOres1, 1, baseMeta + SMALL_ORE_BASE_META + i * 1000));
-                    List<ItemStack> materialDustStackList = new ArrayList<>();
-                    for (int i = 0; i < 7; i++)
-                        materialDustStackList.add(
-                                GT_OreDictUnificator.get(OrePrefixes.dust, GT5OreSmallHelper.getDroppedDusts()[i], 1L));
-                    this.arecipes.add(new CachedOreSmallRecipe(
-                            GT5OreSmallHelper.mapOreSmallWrapper.get(oreGenName).oreGenName,
-                            stackList,
-                            materialDustStackList,
-                            GT5OreSmallHelper.mapOreMetaToOreDrops.get(baseMeta)));
-                }
-            }
+            short oreMeta = GT5OreSmallHelper.mapOreDropUnlocalizedNameToOreMeta.get(stack.getUnlocalizedName());
+            loadSmallOre(oreMeta, 7);
         } else super.loadCraftingRecipes(stack);
+    }
+
+    private void loadSmallOre(short oreMeta, int maximumIndex) {
+        OreSmallWrapper smallOre = getSmallOre(oreMeta);
+        if (smallOre != null) {
+            addSmallOre(smallOre, maximumIndex);
+        }
+    }
+
+    private OreSmallWrapper getSmallOre(short oreMeta) {
+        for (OreSmallWrapper oreSmallWorldGen : GT5OreSmallHelper.mapOreSmallWrapper.values()) {
+            if (oreSmallWorldGen.oreMeta == oreMeta) {
+                return oreSmallWorldGen;
+            }
+        }
+        return null;
+    }
+
+    private void addSmallOre(OreSmallWrapper smallOre, int maximumIndex) {
+        this.arecipes.add(new CachedOreSmallRecipe(
+                smallOre.oreGenName,
+                smallOre.getMaterialDrops(maximumIndex),
+                getStoneDusts(maximumIndex),
+                GT5OreSmallHelper.mapOreMetaToOreDrops.get(smallOre.oreMeta)));
+    }
+
+    private List<ItemStack> getStoneDusts(int maximumIndex) {
+        List<ItemStack> materialDustStackList = new ArrayList<>();
+        for (int i = 0; i < maximumIndex; i++)
+            materialDustStackList.add(
+                    GT_OreDictUnificator.get(OrePrefixes.dust, GT5OreSmallHelper.getDroppedDusts()[i], 1L));
+        return materialDustStackList;
     }
 
     @Override

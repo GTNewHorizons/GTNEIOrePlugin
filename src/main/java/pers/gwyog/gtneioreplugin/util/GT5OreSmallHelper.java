@@ -13,6 +13,7 @@ import java.util.List;
 import net.minecraft.item.ItemStack;
 
 public class GT5OreSmallHelper {
+    private static final int SMALL_ORE_BASE_META = 16000;
     public static boolean restrictBiomeSupport = false;
     public static boolean gcBasicSupport = false;
     public static List<ItemStack> oreSmallList = new ArrayList<>();
@@ -86,7 +87,7 @@ public class GT5OreSmallHelper {
                         mapOreDropUnlocalizedNameToOreMeta.put(stack.getUnlocalizedName(), meta);
                         stackList.add(stack);
                     }
-                    oreSmallList.add(new ItemStack(GregTech_API.sBlockOres1, 1, meta + 16000));
+                    oreSmallList.add(new ItemStack(GregTech_API.sBlockOres1, 1, meta + SMALL_ORE_BASE_META));
                     mapOreMetaToOreDrops.put(meta, stackList);
                 }
             }
@@ -141,6 +142,13 @@ public class GT5OreSmallHelper {
             this.oreMeta = worldGen.mMeta;
             this.worldGenHeightRange = worldGen.mMinY + "-" + worldGen.mMaxY;
             this.amountPerChunk = worldGen.mAmount;
+        }
+
+        public List<ItemStack> getMaterialDrops(int maximumIndex) {
+            List<ItemStack> stackList = new ArrayList<>();
+            for (int i = 0; i < maximumIndex; i++)
+                stackList.add(new ItemStack(GregTech_API.sBlockOres1, 1, oreMeta + SMALL_ORE_BASE_META + i * 1000));
+            return stackList;
         }
     }
 }
