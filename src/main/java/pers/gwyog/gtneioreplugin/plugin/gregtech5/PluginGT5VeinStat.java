@@ -7,6 +7,7 @@ import cpw.mods.fml.common.Loader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -142,7 +143,10 @@ public class PluginGT5VeinStat extends PluginGT5Base {
 
     private String[] getDimNameArrayFromVeinName(String veinName) {
         OreLayerWrapper oreLayer = GT5OreLayerHelper.mapOreLayerWrapper.get(veinName);
-        return DimensionHelper.parseDimNames(GT5OreLayerHelper.bufferedDims.get(oreLayer));
+        String[] dims = DimensionHelper.parseDimNames(GT5OreLayerHelper.bufferedDims.get(oreLayer));
+        Arrays.sort(dims, Comparator.comparingInt(s -> Arrays.asList(DimensionHelper.DimNameDisplayed)
+                .indexOf(s)));
+        return dims;
     }
 
     public class CachedVeinStatRecipe extends CachedRecipe {

@@ -5,6 +5,7 @@ import gregtech.api.enums.OrePrefixes;
 import gregtech.api.util.GT_OreDictUnificator;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -139,7 +140,10 @@ public class PluginGT5SmallOreStat extends PluginGT5Base {
 
     private String[] getDimNameArrayFromVeinName(String veinName) {
         OreSmallWrapper oreSmall = GT5OreSmallHelper.mapOreSmallWrapper.get(veinName);
-        return DimensionHelper.parseDimNames(GT5OreSmallHelper.bufferedDims.get(oreSmall));
+        String[] dims = DimensionHelper.parseDimNames(GT5OreSmallHelper.bufferedDims.get(oreSmall));
+        Arrays.sort(dims, Comparator.comparingInt(s -> Arrays.asList(DimensionHelper.DimNameDisplayed)
+                .indexOf(s)));
+        return dims;
     }
 
     public class CachedOreSmallRecipe extends CachedRecipe {
