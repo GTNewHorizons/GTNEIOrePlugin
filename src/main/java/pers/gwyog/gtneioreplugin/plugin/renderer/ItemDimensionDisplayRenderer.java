@@ -1,7 +1,5 @@
 package pers.gwyog.gtneioreplugin.plugin.renderer;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Tessellator;
@@ -14,7 +12,6 @@ import pers.gwyog.gtneioreplugin.GTNEIOrePlugin;
 import pers.gwyog.gtneioreplugin.plugin.items.ItemDimensionDisplay;
 import pers.gwyog.gtneioreplugin.plugin.items.ModItems;
 
-@SideOnly(Side.CLIENT)
 public class ItemDimensionDisplayRenderer implements IItemRenderer {
 
     public ItemDimensionDisplayRenderer() {
