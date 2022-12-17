@@ -1,5 +1,6 @@
 package pers.gwyog.gtneioreplugin.util;
 
+import static pers.gwyog.gtneioreplugin.util.GT5CFGHelper.oreVeinNotInAnyDim;
 import static pers.gwyog.gtneioreplugin.util.OreVeinLayer.*;
 
 import gregtech.api.GregTech_API;
@@ -49,7 +50,7 @@ public class GT5OreLayerHelper {
         // ------------------------------
         // Get dims as "Ow,Ne,Ma" etc.
         bufferedDims.forEach((oreLayer, dims) -> {
-            if (dims.equals("Not available in any Galactic Dim!")) {
+            if (dims.equals(oreVeinNotInAnyDim)) {
                 return;
             }
 
