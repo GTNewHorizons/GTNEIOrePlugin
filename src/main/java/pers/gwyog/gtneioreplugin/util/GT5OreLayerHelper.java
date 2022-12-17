@@ -68,7 +68,6 @@ public class GT5OreLayerHelper {
             for (String dim : dimToOreWrapper.keySet()) {
                 dimToOreWrapper.get(dim).calculateWeights();
             }
-
         }
     }
 
