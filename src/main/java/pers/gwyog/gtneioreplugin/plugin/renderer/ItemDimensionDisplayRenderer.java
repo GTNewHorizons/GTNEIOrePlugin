@@ -40,12 +40,11 @@ public class ItemDimensionDisplayRenderer implements IItemRenderer {
         GL11.glTranslatef(0, 0, 300);
         GL11.glScalef(smallTextScale, smallTextScale, 1.0f);
 
+        long prefix = getPrefix(dimension);
+        String tooltipPrefix = prefix != -1 ? "T" + prefix : "INVALID. Please, report this to the GTNH team";
+
         fontRender.drawString(
-                "T" + getPrefix(dimension),
-                0,
-                (int) (16 / smallTextScale) - fontRender.FONT_HEIGHT + 1,
-                0xFFFFFF,
-                true);
+                tooltipPrefix, 0, (int) (16 / smallTextScale) - fontRender.FONT_HEIGHT + 1, 0xFFFFFF, true);
 
         GL11.glPopMatrix();
 
