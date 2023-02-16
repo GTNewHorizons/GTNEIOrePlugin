@@ -85,8 +85,8 @@ public class GTNEIOrePlugin {
 
     @EventHandler
     public void onLoadComplete(FMLLoadCompleteEvent event) {
+        new GT5OreLayerHelper();
         if (event.getSide() == Side.CLIENT) {
-            new GT5OreLayerHelper();
             new GT5OreSmallHelper();
             new GT5UndergroundFluidHelper();
             new GuiRecipeHelper();
