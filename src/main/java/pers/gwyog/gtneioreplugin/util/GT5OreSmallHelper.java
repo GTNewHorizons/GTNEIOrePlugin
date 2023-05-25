@@ -151,7 +151,7 @@ public class GT5OreSmallHelper {
         } catch (ClassNotFoundException e) {}
         if (clazzGTOreSmall != null) {
             try {
-               clazzGTOreSmall.getField("mRestrictBiome");
+                clazzGTOreSmall.getField("mRestrictBiome");
                 restrictBiomeSupport = true;
             } catch (Exception e) {}
             try {

@@ -6,13 +6,6 @@ import net.minecraft.item.Item;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import pers.gwyog.gtneioreplugin.plugin.IMCForNEI;
-import pers.gwyog.gtneioreplugin.plugin.block.ModBlocks;
-import pers.gwyog.gtneioreplugin.util.CSVMaker;
-import pers.gwyog.gtneioreplugin.util.GT5OreLayerHelper;
-import pers.gwyog.gtneioreplugin.util.GT5OreSmallHelper;
-import pers.gwyog.gtneioreplugin.util.GT5UndergroundFluidHelper;
-import pers.gwyog.gtneioreplugin.util.GuiRecipeHelper;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -20,6 +13,13 @@ import cpw.mods.fml.common.event.FMLLoadCompleteEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
+import pers.gwyog.gtneioreplugin.plugin.IMCForNEI;
+import pers.gwyog.gtneioreplugin.plugin.block.ModBlocks;
+import pers.gwyog.gtneioreplugin.util.CSVMaker;
+import pers.gwyog.gtneioreplugin.util.GT5OreLayerHelper;
+import pers.gwyog.gtneioreplugin.util.GT5OreSmallHelper;
+import pers.gwyog.gtneioreplugin.util.GT5UndergroundFluidHelper;
+import pers.gwyog.gtneioreplugin.util.GuiRecipeHelper;
 
 @Mod(
         modid = GTNEIOrePlugin.MODID,

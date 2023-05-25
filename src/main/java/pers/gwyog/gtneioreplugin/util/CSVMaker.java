@@ -8,14 +8,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import pers.gwyog.gtneioreplugin.GTNEIOrePlugin;
-import pers.gwyog.gtneioreplugin.plugin.gregtech5.PluginGT5VeinStat;
-import pers.gwyog.gtneioreplugin.util.GT5OreLayerHelper.OreLayerWrapper;
-
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.ColumnPositionMappingStrategy;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
+
+import pers.gwyog.gtneioreplugin.GTNEIOrePlugin;
+import pers.gwyog.gtneioreplugin.plugin.gregtech5.PluginGT5VeinStat;
+import pers.gwyog.gtneioreplugin.util.GT5OreLayerHelper.OreLayerWrapper;
 
 public class CSVMaker implements Runnable {
 
@@ -54,7 +54,8 @@ public class CSVMaker implements Runnable {
 
     public void runSmallOres() {
         try {
-            Iterator<Map.Entry<String, GT5OreSmallHelper.OreSmallWrapper>> it = GT5OreSmallHelper.mapOreSmallWrapper.entrySet().iterator();
+            Iterator<Map.Entry<String, GT5OreSmallHelper.OreSmallWrapper>> it = GT5OreSmallHelper.mapOreSmallWrapper
+                    .entrySet().iterator();
             List<Oremix> OreVeins = new ArrayList<>();
             while (it.hasNext()) {
                 Oremix oremix = new Oremix();
@@ -132,7 +133,8 @@ public class CSVMaker implements Runnable {
 
     public void runVeins() {
         try {
-            Iterator<Map.Entry<String, OreLayerWrapper>> it = GT5OreLayerHelper.mapOreLayerWrapper.entrySet().iterator();
+            Iterator<Map.Entry<String, OreLayerWrapper>> it = GT5OreLayerHelper.mapOreLayerWrapper.entrySet()
+                    .iterator();
             List<Oremix> OreVeins = new ArrayList<>();
             while (it.hasNext()) {
                 Oremix oremix = new Oremix();

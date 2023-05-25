@@ -5,13 +5,13 @@ import java.awt.Rectangle;
 
 import net.minecraft.client.resources.I18n;
 
-import pers.gwyog.gtneioreplugin.plugin.PluginBase;
-import pers.gwyog.gtneioreplugin.util.GuiRecipeHelper;
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.recipe.GuiRecipe;
 import gregtech.api.GregTech_API;
 import gregtech.api.enums.Materials;
 import gregtech.api.util.GT_LanguageManager;
+import pers.gwyog.gtneioreplugin.plugin.PluginBase;
+import pers.gwyog.gtneioreplugin.util.GuiRecipeHelper;
 
 public abstract class PluginGT5Base extends PluginBase {
 
