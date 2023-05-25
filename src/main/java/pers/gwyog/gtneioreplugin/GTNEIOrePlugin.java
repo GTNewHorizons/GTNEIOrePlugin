@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import pers.gwyog.gtneioreplugin.plugin.IMCForNEI;
 import pers.gwyog.gtneioreplugin.plugin.block.ModBlocks;
+import pers.gwyog.gtneioreplugin.util.CSVMaker;
 import pers.gwyog.gtneioreplugin.util.GT5OreLayerHelper;
 import pers.gwyog.gtneioreplugin.util.GT5OreSmallHelper;
 import pers.gwyog.gtneioreplugin.util.GT5UndergroundFluidHelper;
@@ -91,7 +92,7 @@ public class GTNEIOrePlugin {
         if (event.getSide() == Side.CLIENT) {
             new GuiRecipeHelper();
             if (csv) {
-                new pers.gwyog.gtneioreplugin.util.CSVMaker().run();
+                new CSVMaker().run();
             }
         }
     }
