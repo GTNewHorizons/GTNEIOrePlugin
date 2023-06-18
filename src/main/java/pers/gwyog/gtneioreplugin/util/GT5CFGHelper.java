@@ -90,14 +90,14 @@ public class GT5CFGHelper {
                 st = reader.readLine();
                 // FMLLog.info("st: "+st);
                 if (st != null && st.trim().equals("mix {")) {
-                    while (!((st == null) || ((st != null) && found[0]))) {
+                    while (!(st == null || found[0])) {
                         // FMLLog.info("zweite");
                         st = reader.readLine();
                         // read until reached eof or Veinname {
                         // FMLLog.info("MIXst: "+st);
                         if (st != null && st.trim().equals(Veinname + " {")) {
                             // FMLLog.info("VEINNAMEst: "+st);
-                            while (!((st == null) || ((st != null) && found[0]))) {
+                            while (!(st == null || found[0])) {
                                 st = reader.readLine();
                                 if ((!(st == null)) && st.trim().equals("}")) found[0] = true;
                                 // FMLLog.info("dritte");
@@ -109,18 +109,18 @@ public class GT5CFGHelper {
                 }
 
                 if (st != null && st.trim().equals("dimensions {")) {
-                    while (!((st == null) || ((st != null) && found[1]))) {
+                    while (!(st == null || found[1])) {
                         // FMLLog.info("zweite");
                         st = reader.readLine();
                         if (st != null && (st.trim().equals("mix {"))) {
-                            while (!((st == null) || ((st != null) && found[1]))) {
+                            while (!(st == null || found[1])) {
                                 // FMLLog.info("dritte");
                                 st = reader.readLine();
                                 // read until reached eof or Veinname {
                                 // FMLLog.info("MIXst: "+st);
                                 if (st != null && st.trim().equals(Veinname + " {")) {
                                     // FMLLog.info("VEINNAMEst: "+st);
-                                    while (!((st == null) || ((st != null) && found[1]))) {
+                                    while (!(st == null || found[1])) {
                                         st = reader.readLine();
                                         if ((!(st == null)) && st.trim().equals("}")) found[1] = true;
                                         // FMLLog.info("vierte");
