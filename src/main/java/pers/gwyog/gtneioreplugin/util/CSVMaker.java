@@ -26,23 +26,23 @@ public class CSVMaker implements Runnable {
             List<Oremix> list2 = new ArrayList<>(list.size());
             list2.addAll(list);
 
-            int schritt = list2.size();
+            int step = list2.size();
             boolean swapped;
             do {
                 swapped = false;
-                if (schritt > 1) {
-                    schritt = (int) (schritt / 1.3);
+                if (step > 1) {
+                    step = (int) (step / 1.3);
                 }
-                for (int i = 0; i < list2.size() - schritt; i++) {
+                for (int i = 0; i < list2.size() - step; i++) {
                     if (list2.get(i).getOreName().substring(0, 3)
-                            .compareTo((list2.get(i + schritt).getOreName().substring(0, 3))) > 0) {
+                            .compareTo((list2.get(i + step).getOreName().substring(0, 3))) > 0) {
                         Oremix tmp = list2.get(i);
-                        list2.set(i, list2.get(i + schritt));
-                        list2.set(i + schritt, tmp);
+                        list2.set(i, list2.get(i + step));
+                        list2.set(i + step, tmp);
                         swapped = true;
                     }
                 }
-            } while (swapped || schritt > 1);
+            } while (swapped || step > 1);
             return list2;
         } catch (Exception e) {
             e.printStackTrace();
