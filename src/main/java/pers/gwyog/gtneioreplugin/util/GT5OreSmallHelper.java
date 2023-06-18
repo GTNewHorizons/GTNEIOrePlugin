@@ -147,12 +147,12 @@ public class GT5OreSmallHelper {
         Class<?> clazzGTOreSmall = null;
         try {
             clazzGTOreSmall = Class.forName("gregtech.common" + ".GT_Worldgen_GT_Ore_SmallPieces");
-        } catch (ClassNotFoundException e) {}
+        } catch (ClassNotFoundException ignored) {}
         if (clazzGTOreSmall != null) {
             try {
                 clazzGTOreSmall.getField("mRestrictBiome");
                 restrictBiomeSupport = true;
-            } catch (Exception e) {}
+            } catch (Exception ignored) {}
         }
     }
 
