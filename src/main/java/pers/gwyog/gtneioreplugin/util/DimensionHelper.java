@@ -5,7 +5,6 @@ import static pers.gwyog.gtneioreplugin.GTNEIOrePlugin.maxTooltipLines;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import net.minecraft.util.StatCollector;
 
@@ -37,7 +36,7 @@ public class DimensionHelper {
             .map(
                     n -> n.replaceAll("GalacticraftCore_", "").replaceAll("GalacticraftMars_", "")
                             .replaceAll("GalaxySpace_", "").replaceAll("Vanilla_", "Vanilla "))
-            .collect(Collectors.toList()).toArray(new String[0]);
+            .toArray(String[]::new);
 
     public static final String[] DimNameDisplayed = { // first 2 letters if one word else 1 letter of every word, except
             // capital letter in
