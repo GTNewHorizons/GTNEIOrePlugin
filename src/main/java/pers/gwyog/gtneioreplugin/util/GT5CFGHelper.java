@@ -34,11 +34,15 @@ public class GT5CFGHelper {
                 raw.add(p.getName() + "=" + p.getBoolean());
             }
         }
-        if (!raw.isEmpty()) for (String s : raw) {
-            for (int j = 0; j < DimensionHelper.DimName.length; j++)
-                if (s.contains(DimensionHelper.DimName[j])) rawbools.add(s);
-        }
-        else GTNEIOrePlugin.LOG.info("Config entry not found for Vein: " + Veinname);
+        if (!raw.isEmpty()) {
+            for (String s : raw) {
+                for (int j = 0; j < DimensionHelper.DimName.length; j++) {
+                    if (s.contains(DimensionHelper.DimName[j])) {
+                        rawbools.add(s);
+                    }
+                }
+            }
+        } else GTNEIOrePlugin.LOG.info("Config entry not found for Vein: " + Veinname);
 
         StringBuilder ret = new StringBuilder(" ");
 
@@ -53,13 +57,16 @@ public class GT5CFGHelper {
             for (int j = 0; j < DimensionHelper.DimName.length; j++) {
                 for (String rawbool : rawbools) {
                     st = rawbool;
-                    if (st.contains(DimensionHelper.DimName[j]))
-                        if (st.contains("=true")) ret.append(DimensionHelper.DimNameDisplayed[j]).append(",");
+                    if (st.contains(DimensionHelper.DimName[j]) && st.contains("=true")) {
+                        ret.append(DimensionHelper.DimNameDisplayed[j]).append(",");
+                    }
                 }
             }
         }
         ret = new StringBuilder(ret.toString().trim());
-        if (ret.toString().equals("") || ret.toString().equals(" ")) ret = new StringBuilder(oreVeinNotInAnyDim);
+        if (ret.toString().equals("") || ret.toString().equals(" ")) {
+            ret = new StringBuilder(oreVeinNotInAnyDim);
+        }
         return ret.toString();
     }
 
@@ -70,7 +77,9 @@ public class GT5CFGHelper {
             return "Error while Loading CFG";
         } else try {
             int buffer = (int) (0.1 * Runtime.getRuntime().freeMemory());
-            if (buffer > F.length()) buffer = (int) F.length();
+            if (buffer > F.length()) {
+                buffer = (int) F.length();
+            }
             // allocate 10% of free memory for read-in-buffer, if there is less than filesize memory available
             // FMLLog.info("GT_CFG_found[0]");
             FileReader in = new FileReader(F);
@@ -99,7 +108,9 @@ public class GT5CFGHelper {
                             // FMLLog.info("VEINNAMEst: "+st);
                             while (!(st == null || found[0])) {
                                 st = reader.readLine();
-                                if ((!(st == null)) && st.trim().equals("}")) found[0] = true;
+                                if ((!(st == null)) && st.trim().equals("}")) {
+                                    found[0] = true;
+                                }
                                 // FMLLog.info("dritte");
                                 // add everything below Veinname { undtil } to raw
                                 raw.add(st);
@@ -122,7 +133,9 @@ public class GT5CFGHelper {
                                     // FMLLog.info("VEINNAMEst: "+st);
                                     while (!(st == null || found[1])) {
                                         st = reader.readLine();
-                                        if ((!(st == null)) && st.trim().equals("}")) found[1] = true;
+                                        if ((!(st == null)) && st.trim().equals("}")) {
+                                            found[1] = true;
+                                        }
                                         // FMLLog.info("vierte");
                                         // add everything below Veinname { undtil } to raw
                                         raw.add(st);
@@ -135,14 +148,20 @@ public class GT5CFGHelper {
             } while (st != null);
             reader.close(); // not needed anymore
 
-            if (!raw.isEmpty()) for (String s : raw) {
-                // filter needed booleans from raw
-                /// FMLLog.info("raw contains"+raw.get(i));
-                for (int j = 0; j < DimensionHelper.DimName.length; j++)
-                    if (s.contains(DimensionHelper.DimName[j])) rawbools.add(s);
-                // FMLLog.info("rawbools: "+rawbools.get(i));
+            if (!raw.isEmpty()) {
+                for (String s : raw) {
+                    // filter needed booleans from raw
+                    /// FMLLog.info("raw contains"+raw.get(i));
+                    for (int j = 0; j < DimensionHelper.DimName.length; j++) {
+                        if (s.contains(DimensionHelper.DimName[j])) {
+                            rawbools.add(s);
+                        }
+                    }
+                    // FMLLog.info("rawbools: "+rawbools.get(i));
+                }
+            } else {
+                GTNEIOrePlugin.LOG.info("Config entry not found for Vein: " + Veinname);
             }
-            else GTNEIOrePlugin.LOG.info("Config entry not found for Vein: " + Veinname);
 
             StringBuilder ret = new StringBuilder(" ");
 
@@ -160,14 +179,17 @@ public class GT5CFGHelper {
                     // FMLLog.info("RawBools:"+st);
                     for (String rawbool : rawbools) {
                         st = rawbool;
-                        if (st.contains(DimensionHelper.DimName[j]))
-                            if (st.contains("=true")) ret.append(DimensionHelper.DimNameDisplayed[j]).append(",");
+                        if (st.contains(DimensionHelper.DimName[j]) && st.contains("=true")) {
+                            ret.append(DimensionHelper.DimNameDisplayed[j]).append(",");
+                        }
                     }
                 }
             }
             ret = new StringBuilder(ret.toString().trim());
             // FMLLog.info("ret:"+ret);
-            if (ret.toString().equals("") || ret.toString().equals(" ")) ret = new StringBuilder(oreVeinNotInAnyDim);
+            if (ret.toString().equals("") || ret.toString().equals(" ")) {
+                ret = new StringBuilder(oreVeinNotInAnyDim);
+            }
             return ret.toString();
         } catch (IOException e) {
             e.printStackTrace();
