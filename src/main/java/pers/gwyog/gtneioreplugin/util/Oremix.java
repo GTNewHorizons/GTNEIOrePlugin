@@ -529,6 +529,6 @@ public class Oremix {
     }
 
     public String getHeightcalced() {
-        return new String(this.miny + "-" + this.maxy);
+        return this.miny + "-" + this.maxy;
     }
 }
