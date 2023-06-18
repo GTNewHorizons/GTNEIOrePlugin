@@ -33,7 +33,7 @@ public class GT5UndergroundFluidHelper {
     private static final Map<String, List<UndergroundFluidWrapper>> fluidMap = new HashMap<>();
 
     @SuppressWarnings("unchecked")
-    public GT5UndergroundFluidHelper() {
+    public static void init() {
         try {
             Field fieldDimensionList = GT_UO_DimensionList.class.getDeclaredField("fDimensionList");
             fieldDimensionList.setAccessible(true);
@@ -119,14 +119,14 @@ public class GT5UndergroundFluidHelper {
     }
 
     @SuppressWarnings("SwitchStatementWithTooFewBranches")
-    private String getDimensionFromID(int id) {
+    private static String getDimensionFromID(int id) {
         return switch (id) {
             case 0 -> "Ow";
             default -> null;
         };
     }
 
-    private String getDimensionForEdgeCase(String rawDimension) {
+    private static String getDimensionForEdgeCase(String rawDimension) {
         return switch (rawDimension) {
             case "aCentauriBb" -> "CB";
             case "BarnardaC" -> "BC";

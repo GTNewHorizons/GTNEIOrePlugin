@@ -42,7 +42,7 @@ public class GT5OreLayerHelper {
     public static final HashMap<OreLayerWrapper, String> bufferedDims = new HashMap<>();
     public static final HashMap<String, NormalOreDimensionWrapper> dimToOreWrapper = new HashMap<>();
 
-    public GT5OreLayerHelper() {
+    public static void init() {
         Arrays.fill(weightPerWorld, 0);
         Arrays.fill(DimIDs, 0);
         for (GT_Worldgen_GT_Ore_Layer tWorldGen : GT_Worldgen_GT_Ore_Layer.sList)

@@ -45,7 +45,7 @@ public class GT5OreSmallHelper {
         }
     }
 
-    public GT5OreSmallHelper() {
+    public static void init() {
         checkExtraSupport();
         ItemStack stack;
         Materials material;

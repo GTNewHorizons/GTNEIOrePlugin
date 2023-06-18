@@ -83,9 +83,9 @@ public class GTNEIOrePlugin {
 
     @EventHandler
     public void onLoadComplete(FMLLoadCompleteEvent event) {
-        new GT5OreLayerHelper();
-        new GT5OreSmallHelper();
-        new GT5UndergroundFluidHelper();
+        GT5OreLayerHelper.init();
+        GT5OreSmallHelper.init();
+        GT5UndergroundFluidHelper.init();
         if (event.getSide() == Side.CLIENT) {
             if (csv) {
                 new CSVMaker().run();
