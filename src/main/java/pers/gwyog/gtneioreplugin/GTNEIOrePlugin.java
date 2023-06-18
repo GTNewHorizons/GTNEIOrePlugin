@@ -19,7 +19,6 @@ import pers.gwyog.gtneioreplugin.util.CSVMaker;
 import pers.gwyog.gtneioreplugin.util.GT5OreLayerHelper;
 import pers.gwyog.gtneioreplugin.util.GT5OreSmallHelper;
 import pers.gwyog.gtneioreplugin.util.GT5UndergroundFluidHelper;
-import pers.gwyog.gtneioreplugin.util.GuiRecipeHelper;
 
 @Mod(
         modid = GTNEIOrePlugin.MODID,
@@ -90,7 +89,6 @@ public class GTNEIOrePlugin {
         new GT5OreSmallHelper();
         new GT5UndergroundFluidHelper();
         if (event.getSide() == Side.CLIENT) {
-            new GuiRecipeHelper();
             if (csv) {
                 new CSVMaker().run();
             }
