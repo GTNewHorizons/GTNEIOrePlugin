@@ -26,7 +26,7 @@ public class GT5CFGHelper {
     public static String GT5CFGSmallOres(String Veinname) {
         List<String> raw = new ArrayList<>();
         List<String> rawbools = new ArrayList<>();
-        String st = null;
+        String st;
         Configuration c = new Configuration(F);
         ConfigCategory configCategory = c.getCategory("worldgen." + Veinname);
         for (Property p : configCategory.getOrderedValues()) {
@@ -77,7 +77,7 @@ public class GT5CFGHelper {
             // FMLLog.info("FileReader created");
             BufferedReader reader = new BufferedReader(in, buffer);
             // FMLLog.info("BufferedReader" +Integer.toString(buffer)+"created");
-            String st = null;
+            String st;
             List<String> raw = new ArrayList<>();
             List<String> rawbools = new ArrayList<>();
             Boolean[] found = new Boolean[2];

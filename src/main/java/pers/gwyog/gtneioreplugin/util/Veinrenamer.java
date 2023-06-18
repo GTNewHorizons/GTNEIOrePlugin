@@ -6,7 +6,7 @@ public class Veinrenamer<T> extends AbstractBeanField<T> {
 
     @Override
     protected Object convert(String value) {
-        String ret = null;
+        String ret;
         CharSequence s = "/";
 
         if (value.contains(s)) {

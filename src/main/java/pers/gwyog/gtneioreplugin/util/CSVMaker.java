@@ -27,7 +27,7 @@ public class CSVMaker implements Runnable {
             liste2.addAll(liste);
 
             int schritt = liste2.size();
-            boolean vertauscht = false;
+            boolean vertauscht;
             do {
                 vertauscht = false;
                 if (schritt > 1) {
