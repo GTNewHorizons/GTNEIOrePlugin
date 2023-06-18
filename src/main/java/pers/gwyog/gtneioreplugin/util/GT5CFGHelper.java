@@ -40,7 +40,7 @@ public class GT5CFGHelper {
         }
         else GTNEIOrePlugin.LOG.info("Config entry not found for Vein: " + Veinname);
 
-        String ret = " ";
+        StringBuilder ret = new StringBuilder(" ");
 
         HashSet<String> rawboolsset = new HashSet<>();
         if (!rawbools.isEmpty()) {
@@ -54,13 +54,13 @@ public class GT5CFGHelper {
                 for (String rawbool : rawbools) {
                     st = rawbool;
                     if (st.contains(DimensionHelper.DimName[j]))
-                        if (st.contains("=true")) ret = (ret + DimensionHelper.DimNameDisplayed[j] + ",");
+                        if (st.contains("=true")) ret.append(DimensionHelper.DimNameDisplayed[j]).append(",");
                 }
             }
         }
-        ret = ret.trim();
-        if (ret.equals("") || ret.equals(" ")) ret = oreVeinNotInAnyDim;
-        return ret;
+        ret = new StringBuilder(ret.toString().trim());
+        if (ret.toString().equals("") || ret.toString().equals(" ")) ret = new StringBuilder(oreVeinNotInAnyDim);
+        return ret.toString();
     }
 
     public static String GT5CFG(String Veinname) {
@@ -144,7 +144,7 @@ public class GT5CFGHelper {
             }
             else GTNEIOrePlugin.LOG.info("Config entry not found for Vein: " + Veinname);
 
-            String ret = " ";
+            StringBuilder ret = new StringBuilder(" ");
 
             HashSet<String> rawboolsset = new HashSet<>();
             if (!rawbools.isEmpty()) {
@@ -161,14 +161,14 @@ public class GT5CFGHelper {
                     for (String rawbool : rawbools) {
                         st = rawbool;
                         if (st.contains(DimensionHelper.DimName[j]))
-                            if (st.contains("=true")) ret = (ret + DimensionHelper.DimNameDisplayed[j] + ",");
+                            if (st.contains("=true")) ret.append(DimensionHelper.DimNameDisplayed[j]).append(",");
                     }
                 }
             }
-            ret = ret.trim();
+            ret = new StringBuilder(ret.toString().trim());
             // FMLLog.info("ret:"+ret);
-            if (ret.equals("") || ret.equals(" ")) ret = oreVeinNotInAnyDim;
-            return ret;
+            if (ret.toString().equals("") || ret.toString().equals(" ")) ret = new StringBuilder(oreVeinNotInAnyDim);
+            return ret.toString();
         } catch (IOException e) {
             e.printStackTrace();
             return "Error while Loading CFG";
