@@ -24,8 +24,8 @@ public class GT5CFGHelper {
     private static final File F = GregTech_API.sWorldgenFile.mConfig.getConfigFile();
 
     public static String GT5CFGSmallOres(String Veinname) {
-        List<String> raw = new ArrayList<String>();
-        List<String> rawbools = new ArrayList<String>();
+        List<String> raw = new ArrayList<>();
+        List<String> rawbools = new ArrayList<>();
         String st = null;
         Configuration c = new Configuration(F);
         ConfigCategory configCategory = c.getCategory("worldgen." + Veinname);
@@ -42,14 +42,14 @@ public class GT5CFGHelper {
 
         String ret = " ";
 
-        HashSet<String> rawboolsset = new HashSet<String>();
+        HashSet<String> rawboolsset = new HashSet<>();
         if (!rawbools.isEmpty()) {
             for (String rawbool : rawbools) {
                 st = rawbool.replace("B:", "").replace("_true", "").replace("_false", "").replaceAll(" ", "")
                         .replaceAll("\"", "");
                 rawboolsset.add(st);
             }
-            rawbools = new ArrayList<String>(rawboolsset);
+            rawbools = new ArrayList<>(rawboolsset);
             for (int j = 0; j < DimensionHelper.DimName.length; j++) {
                 for (String rawbool : rawbools) {
                     st = rawbool;
@@ -78,8 +78,8 @@ public class GT5CFGHelper {
             BufferedReader reader = new BufferedReader(in, buffer);
             // FMLLog.info("BufferedReader" +Integer.toString(buffer)+"created");
             String st = null;
-            List<String> raw = new ArrayList<String>();
-            List<String> rawbools = new ArrayList<String>();
+            List<String> raw = new ArrayList<>();
+            List<String> rawbools = new ArrayList<>();
             Boolean[] found = new Boolean[2];
             found[0] = false;
             found[1] = false;
@@ -146,7 +146,7 @@ public class GT5CFGHelper {
 
             String ret = " ";
 
-            HashSet<String> rawboolsset = new HashSet<String>();
+            HashSet<String> rawboolsset = new HashSet<>();
             if (!rawbools.isEmpty()) {
                 // remove dublicates
                 for (String rawbool : rawbools) {
@@ -154,7 +154,7 @@ public class GT5CFGHelper {
                             .replaceAll("\"", "");
                     rawboolsset.add(st);
                 }
-                rawbools = new ArrayList<String>(rawboolsset);
+                rawbools = new ArrayList<>(rawboolsset);
                 // filter for dims set to true
                 for (int j = 0; j < DimensionHelper.DimName.length; j++) {
                     // FMLLog.info("RawBools:"+st);

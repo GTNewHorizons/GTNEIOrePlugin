@@ -23,7 +23,7 @@ public class CSVMaker implements Runnable {
 
     public static List<Oremix> Combsort(List<Oremix> liste) {
         try {
-            List<Oremix> liste2 = new ArrayList<Oremix>(liste.size());
+            List<Oremix> liste2 = new ArrayList<>(liste.size());
             liste2.addAll(liste);
 
             int schritt = liste2.size();
