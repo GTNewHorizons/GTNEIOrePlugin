@@ -85,7 +85,6 @@ public class GT5OreLayerHelper {
         public String veinName, worldGenHeightRange;
         public short[] Meta = new short[4];
         public short randomWeight, size, density;
-        public List<Integer> Weight = new ArrayList<>();
 
         public final Materials mPrimaryVeinMaterial;
         public final Materials mSecondaryMaterial;

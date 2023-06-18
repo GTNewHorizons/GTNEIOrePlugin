@@ -20,7 +20,6 @@ public class GT5OreSmallHelper {
 
     private static final int SMALL_ORE_BASE_META = 16000;
     public static boolean restrictBiomeSupport = false;
-    public static boolean gcBasicSupport = false;
     public static List<ItemStack> oreSmallList = new ArrayList<>();
     public static HashMap<String, OreSmallWrapper> mapOreSmallWrapper = new HashMap<>();
     public static HashMap<String, Short> mapOreDropUnlocalizedNameToOreMeta = new HashMap<>();
@@ -154,11 +153,6 @@ public class GT5OreSmallHelper {
                 clazzGTOreSmall.getField("mRestrictBiome");
                 restrictBiomeSupport = true;
             } catch (Exception e) {}
-            try {
-                clazzGTOreSmall.getField("mMoon");
-                clazzGTOreSmall.getField("mMars");
-                gcBasicSupport = true;
-            } catch (Exception e) {}
         }
     }
 
@@ -173,8 +167,8 @@ public class GT5OreSmallHelper {
         public short oreMeta;
         public String worldGenHeightRange;
         public short amountPerChunk;
-        public String restrictBiome;
 
+        @SuppressWarnings("unused")
         public Materials getOreMaterial() {
             return oreMaterial;
         }

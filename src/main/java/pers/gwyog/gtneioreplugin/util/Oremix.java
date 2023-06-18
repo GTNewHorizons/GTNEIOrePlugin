@@ -3,6 +3,7 @@ package pers.gwyog.gtneioreplugin.util;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvCustomBindByName;
 
+@SuppressWarnings("unused")
 public class Oremix {
 
     @CsvCustomBindByName(column = "Moon", required = false, converter = XtoBool.class)

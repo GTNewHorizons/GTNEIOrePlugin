@@ -34,7 +34,6 @@ public class GTNEIOrePlugin {
     public static boolean csv = false;
     public static String CSVname;
     public static String CSVnameSmall;
-    public static boolean toolTips = true;
     public static int maxTooltipLines = 11;
     public static final CreativeTabs creativeTab = new CreativeTabs(MODID) {
 
@@ -65,7 +64,6 @@ public class GTNEIOrePlugin {
                 "ALL",
                 event.getModConfigurationDirectory() + "/GTNH-Small-Ores-Sheet.csv",
                 "rename the oresheet here, it will appear in /config");
-        toolTips = c.tConfig.getBoolean("DimTooltip", "ALL", true, "Activates Dimension Tooltips");
         maxTooltipLines = c.tConfig.getInt(
                 "MaxToolTipLines",
                 "ALL",

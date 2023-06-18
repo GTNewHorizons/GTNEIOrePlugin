@@ -12,6 +12,7 @@ public class BlockDimensionDisplay extends Block {
 
     private final String dimension;
 
+    @SuppressWarnings("unused")
     public long getDimensionRocketTier() {
         return dimensionRocketTier;
     }
