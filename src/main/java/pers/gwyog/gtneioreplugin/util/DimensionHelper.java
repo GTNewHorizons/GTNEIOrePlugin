@@ -100,57 +100,18 @@ public class DimensionHelper {
                 if (s.equals(DimNameDisplayed[i])) {
                     String k = DimNameTrimmed[i];
                     s = StatCollector.translateToLocal("gtnop.world." + k);
-                    switch (k) {
-                        case "Moon":
-                            s = "T1: " + s;
-                            break;
-                        case "Deimos":
-                        case "Mars":
-                        case "Phobos":
-                            s = "T2: " + s;
-                            break;
-                        case "Asteroids":
-                        case "Callisto":
-                        case "Ceres":
-                        case "Europa":
-                        case "Ganymede":
-                        case "Ross128b":
-                            s = "T3: " + s;
-                            break;
-                        case "Io":
-                        case "Mercury":
-                        case "Venus":
-                            s = "T4: " + s;
-                            break;
-                        case "Enceladus":
-                        case "Miranda":
-                        case "Oberon":
-                        case "Titan":
-                        case "Ross128ba":
-                            s = "T5: " + s;
-                            break;
-                        case "Proteus":
-                        case "Triton":
-                            s = "T6: " + s;
-                            break;
-                        case "Haumea":
-                        case "Kuiperbelt":
-                        case "MakeMake":
-                        case "Pluto":
-                            s = "T7: " + s;
-                            break;
-                        case "BarnardC":
-                        case "BarnardE":
-                        case "BarnardF":
-                        case "CentauriA":
-                        case "TcetiE":
-                        case "VegaB":
-                            s = "T8: " + s;
-                            break;
-                        case "Underdark":
-                            s = "T9: " + s;
-                            break;
-                    }
+                    s = switch (k) {
+                        case "Moon" -> "T1: " + s;
+                        case "Deimos", "Mars", "Phobos" -> "T2: " + s;
+                        case "Asteroids", "Callisto", "Ceres", "Europa", "Ganymede", "Ross128b" -> "T3: " + s;
+                        case "Io", "Mercury", "Venus" -> "T4: " + s;
+                        case "Enceladus", "Miranda", "Oberon", "Titan", "Ross128ba" -> "T5: " + s;
+                        case "Proteus", "Triton" -> "T6: " + s;
+                        case "Haumea", "Kuiperbelt", "MakeMake", "Pluto" -> "T7: " + s;
+                        case "BarnardC", "BarnardE", "BarnardF", "CentauriA", "TcetiE", "VegaB" -> "T8: " + s;
+                        case "Underdark" -> "T9: " + s;
+                        default -> s;
+                    };
 
                     dims[j] = s;
                 }

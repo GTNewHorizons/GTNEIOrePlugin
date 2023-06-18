@@ -30,18 +30,11 @@ public class BlockDimensionDisplay extends Block {
     @Override
     public IIcon getIcon(int side, int meta) {
         EnumFacing direction = EnumFacing.getFront(side);
-        switch (direction) {
-            case NORTH:
-            case SOUTH:
-                return iconRight;
-            case WEST:
-            case EAST:
-                return iconLeft;
-            case UP:
-            case DOWN:
-            default:
-                return iconTop;
-        }
+        return switch (direction) {
+            case NORTH, SOUTH -> iconRight;
+            case WEST, EAST -> iconLeft;
+            default -> iconTop;
+        };
     }
 
     @Override

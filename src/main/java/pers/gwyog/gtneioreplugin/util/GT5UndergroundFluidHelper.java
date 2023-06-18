@@ -120,30 +120,24 @@ public class GT5UndergroundFluidHelper {
 
     @SuppressWarnings("SwitchStatementWithTooFewBranches")
     private String getDimensionFromID(int id) {
-        switch (id) {
-            case 0:
-                return "Ow";
-            default:
-                return null;
-        }
+        return switch (id) {
+            case 0 -> "Ow";
+            default -> null;
+        };
     }
 
     private String getDimensionForEdgeCase(String rawDimension) {
-        switch (rawDimension) {
-            case "aCentauriBb":
-                return "CB";
-            case "BarnardaC":
-                return "BC";
-            case "BarnardaE":
-                return "BE";
-            case "BarnardaF":
-                return "BF";
-            case "TCetiE":
-                return "TE";
-            default:
+        return switch (rawDimension) {
+            case "aCentauriBb" -> "CB";
+            case "BarnardaC" -> "BC";
+            case "BarnardaE" -> "BE";
+            case "BarnardaF" -> "BF";
+            case "TCetiE" -> "TE";
+            default -> {
                 LOG.warn("Unknown dimension name while parsing: " + rawDimension);
-                return null;
-        }
+                yield null;
+            }
+        };
     }
 
     public static class UndergroundFluidWrapper {
