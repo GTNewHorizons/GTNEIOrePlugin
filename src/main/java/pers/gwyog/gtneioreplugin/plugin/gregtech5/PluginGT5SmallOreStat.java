@@ -27,8 +27,7 @@ public class PluginGT5SmallOreStat extends PluginGT5Base {
         drawSmallOreName(oreSmall);
         drawSmallOreInfo(oreSmall);
 
-        String sDimNames = GT5OreSmallHelper.bufferedDims.get(oreSmall);
-        drawDimNames(sDimNames);
+        drawDimNames();
 
         drawSeeAllRecipesLabel();
     }
@@ -126,18 +125,6 @@ public class PluginGT5SmallOreStat extends PluginGT5Base {
     @Override
     public String getRecipeName() {
         return I18n.format("gtnop.gui.smallOreStat.name");
-    }
-
-    /**
-     * The dimension names for a given recipe identifier
-     *
-     * @param recipe identifier
-     * @return A CSV string of dimension name abbreviations
-     */
-    @Override
-    protected String getDimensionNames(int recipe) {
-        OreSmallWrapper oreSmall = getSmallOre(recipe);
-        return GT5OreSmallHelper.bufferedDims.get(oreSmall);
     }
 
     private String[] getDimNameArrayFromVeinName(String veinName) {

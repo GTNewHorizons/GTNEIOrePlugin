@@ -80,8 +80,7 @@ public class PluginGT5VeinStat extends PluginGT5Base {
         drawVeinLayerNames(oreLayer);
         drawVeinInfo(oreLayer);
 
-        String sDimNames = GT5OreLayerHelper.bufferedDims.get(oreLayer);
-        drawDimNames(sDimNames);
+        drawDimNames();
 
         drawSeeAllRecipesLabel();
     }
@@ -130,18 +129,6 @@ public class PluginGT5VeinStat extends PluginGT5Base {
     @Override
     public String getRecipeName() {
         return I18n.format("gtnop.gui.veinStat.name");
-    }
-
-    /**
-     * The dimension names for a given recipe identifier
-     *
-     * @param recipe identifier
-     * @return A CSV string of dimension name abbreviations
-     */
-    @Override
-    protected String getDimensionNames(int recipe) {
-        OreLayerWrapper oreLayer = getOreLayer(recipe);
-        return GT5OreLayerHelper.bufferedDims.get(oreLayer);
     }
 
     private String[] getDimNameArrayFromVeinName(String veinName) {
