@@ -136,10 +136,10 @@ public class PluginGT5SmallOreStat extends PluginGT5Base {
 
     public class CachedOreSmallRecipe extends CachedRecipe {
 
-        public String oreGenName;
-        public PositionedStack positionedStackOreSmall;
-        public PositionedStack positionedStackMaterialDust;
-        public List<PositionedStack> positionedDropStackList;
+        public final String oreGenName;
+        public final PositionedStack positionedStackOreSmall;
+        public final PositionedStack positionedStackMaterialDust;
+        public final List<PositionedStack> positionedDropStackList;
         private final List<PositionedStack> dimensionDisplayItems = new ArrayList<>();
 
         public CachedOreSmallRecipe(String oreGenName, List<ItemStack> stackList, List<ItemStack> materialDustStackList,

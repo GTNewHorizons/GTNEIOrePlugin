@@ -11,7 +11,7 @@ import net.minecraft.util.StatCollector;
 
 public class DimensionHelper {
 
-    public static String[] DimName = {
+    public static final String[] DimName = {
             // Non GC dimensions in progression order instead of alphabetical
             "Overworld", "Nether", "Twilight", "TheEnd", "Vanilla_EndAsteroids", "EndAsteroid",
             // T1
@@ -33,14 +33,14 @@ public class DimensionHelper {
             "GalaxySpace_BarnardC", "GalaxySpace_BarnardE", "GalaxySpace_BarnardF", "GalaxySpace_CentauriA",
             "GalaxySpace_TcetiE", "Underdark", "GalaxySpace_VegaB", };
 
-    public static String[] DimNameTrimmed = Arrays.stream(DimName)
+    public static final String[] DimNameTrimmed = Arrays.stream(DimName)
             .map(
                     n -> n.replaceAll("GalacticraftCore_", "").replaceAll("GalacticraftMars_", "")
                             .replaceAll("GalaxySpace_", "").replaceAll("Vanilla_", "Vanilla "))
             .collect(Collectors.toList()).toArray(new String[0]);
 
-    public static String[] DimNameDisplayed = { // first 2 letters if one word else 1 letter of every word, except
-                                                // capital letter in
+    public static final String[] DimNameDisplayed = { // first 2 letters if one word else 1 letter of every word, except
+            // capital letter in
             // name, then 1rst + capital Moon = Mo, BarnardC = BC, EndAsteroid = EA
             // Non GC dimensions in progression order instead of alphabetical
             "Ow", // Overworld
