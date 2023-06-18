@@ -27,9 +27,9 @@ public class CSVMaker implements Runnable {
             list2.addAll(list);
 
             int schritt = list2.size();
-            boolean vertauscht;
+            boolean swapped;
             do {
-                vertauscht = false;
+                swapped = false;
                 if (schritt > 1) {
                     schritt = (int) (schritt / 1.3);
                 }
@@ -39,10 +39,10 @@ public class CSVMaker implements Runnable {
                         Oremix tmp = list2.get(i);
                         list2.set(i, list2.get(i + schritt));
                         list2.set(i + schritt, tmp);
-                        vertauscht = true;
+                        swapped = true;
                     }
                 }
-            } while (vertauscht || schritt > 1);
+            } while (swapped || schritt > 1);
             return list2;
         } catch (Exception e) {
             e.printStackTrace();
