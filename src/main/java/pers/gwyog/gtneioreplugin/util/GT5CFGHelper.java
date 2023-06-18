@@ -34,9 +34,9 @@ public class GT5CFGHelper {
                 raw.add(p.getName() + "=" + p.getBoolean());
             }
         }
-        if (!raw.isEmpty()) for (int i = 0; i < raw.size(); i++) {
+        if (!raw.isEmpty()) for (String s : raw) {
             for (int j = 0; j < DimensionHelper.DimName.length; j++)
-                if (raw.get(i).contains(DimensionHelper.DimName[j])) rawbools.add(raw.get(i));
+                if (s.contains(DimensionHelper.DimName[j])) rawbools.add(s);
         }
         else GTNEIOrePlugin.LOG.info("Config entry not found for Vein: " + Veinname);
 
@@ -44,15 +44,15 @@ public class GT5CFGHelper {
 
         HashSet<String> rawboolsset = new HashSet<String>();
         if (!rawbools.isEmpty()) {
-            for (int i = 0; i < rawbools.size(); i++) {
-                st = rawbools.get(i).replace("B:", "").replace("_true", "").replace("_false", "").replaceAll(" ", "")
+            for (String rawbool : rawbools) {
+                st = rawbool.replace("B:", "").replace("_true", "").replace("_false", "").replaceAll(" ", "")
                         .replaceAll("\"", "");
                 rawboolsset.add(st);
             }
             rawbools = new ArrayList<String>(rawboolsset);
             for (int j = 0; j < DimensionHelper.DimName.length; j++) {
-                for (int i = 0; i < rawbools.size(); i++) {
-                    st = rawbools.get(i);
+                for (String rawbool : rawbools) {
+                    st = rawbool;
                     if (st.contains(DimensionHelper.DimName[j]))
                         if (st.contains("=true")) ret = (ret + DimensionHelper.DimNameDisplayed[j] + ",");
                 }
@@ -135,11 +135,11 @@ public class GT5CFGHelper {
             } while (st != null);
             reader.close(); // not needed anymore
 
-            if (!raw.isEmpty()) for (int i = 0; i < raw.size(); i++) {
+            if (!raw.isEmpty()) for (String s : raw) {
                 // filter needed booleans from raw
                 /// FMLLog.info("raw contains"+raw.get(i));
                 for (int j = 0; j < DimensionHelper.DimName.length; j++)
-                    if (raw.get(i).contains(DimensionHelper.DimName[j])) rawbools.add(raw.get(i));
+                    if (s.contains(DimensionHelper.DimName[j])) rawbools.add(s);
                 // FMLLog.info("rawbools: "+rawbools.get(i));
             }
             else GTNEIOrePlugin.LOG.info("Config entry not found for Vein: " + Veinname);
@@ -149,17 +149,17 @@ public class GT5CFGHelper {
             HashSet<String> rawboolsset = new HashSet<String>();
             if (!rawbools.isEmpty()) {
                 // remove dublicates
-                for (int i = 0; i < rawbools.size(); i++) {
-                    st = rawbools.get(i).replace("B:", "").replace("_true", "").replace("_false", "")
-                            .replaceAll(" ", "").replaceAll("\"", "");
+                for (String rawbool : rawbools) {
+                    st = rawbool.replace("B:", "").replace("_true", "").replace("_false", "").replaceAll(" ", "")
+                            .replaceAll("\"", "");
                     rawboolsset.add(st);
                 }
                 rawbools = new ArrayList<String>(rawboolsset);
                 // filter for dims set to true
                 for (int j = 0; j < DimensionHelper.DimName.length; j++) {
                     // FMLLog.info("RawBools:"+st);
-                    for (int i = 0; i < rawbools.size(); i++) {
-                        st = rawbools.get(i);
+                    for (String rawbool : rawbools) {
+                        st = rawbool;
                         if (st.contains(DimensionHelper.DimName[j]))
                             if (st.contains("=true")) ret = (ret + DimensionHelper.DimNameDisplayed[j] + ",");
                     }
