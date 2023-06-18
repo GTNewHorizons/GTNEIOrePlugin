@@ -36,9 +36,9 @@ public class CSVMaker implements Runnable {
                 for (int i = 0; i < liste2.size() - schritt; i++) {
                     if (liste2.get(i).getOreName().substring(0, 3)
                             .compareTo((liste2.get(i + schritt).getOreName().substring(0, 3))) > 0) {
-                        Oremix tmp = (Oremix) liste2.get(i);
+                        Oremix tmp = liste2.get(i);
                         liste2.set(i, liste2.get(i + schritt));
-                        liste2.set(i + schritt, (Oremix) tmp);
+                        liste2.set(i + schritt, tmp);
                         vertauscht = true;
                     }
                 }
